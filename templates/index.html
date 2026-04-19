@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI-powered concrete defect detection. Upload a photo and get a professional pathology report in seconds.">
+  <title>{{ app_name }} — AI Concrete Inspection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════════ -->
+<header class="site-header">
+  <div class="container nav">
+    <a href="/" class="brand">
+      <div class="brand-icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 7 L5 4 L7 6 L9 3 L12 7" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1 10 L4 10 L4 12 L10 12 L10 10 L13 10" stroke="white" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+        </svg>
+      </div>
+      {{ app_name }}
+    </a>
+    <nav class="menu">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#classification">Classification</a>
+      <a href="#analyzer">Analyzer</a>
+    </nav>
+    <a href="#analyzer" class="btn btn-primary nav-cta">Start Inspection</a>
+  </div>
+</header>
+
+<!-- ══ HERO ════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container hero-grid">
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-dot"></span>
+        AI-Powered Structural Inspection
+      </div>
+      <h1 class="hero-title">
+        Concrete pathology analysis in <em>seconds</em>
+      </h1>
+      <p class="hero-desc">
+        Upload a site photo — receive a color-coded defect map and a structured 8-section engineering report. Built for inspectors, engineers, and infrastructure owners.
+      </p>
+      <ul class="hero-checks">
+        <li>Color-coded crack map by width</li>
+        <li>8-section engineering report</li>
+        <li>Severity & PCI classification</li>
+        <li>Root cause analysis</li>
+        <li>One-click PDF export</li>
+      </ul>
+      <div class="hero-actions">
+        <a href="#analyzer" class="btn btn-primary btn-large">Analyze a Concrete Photo</a>
+        <a href="#how-it-works" class="btn btn-ghost btn-large">See the process</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ STATS ════════════════════════════════════════════════ -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Defect types recognized</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">&lt;60s</div>
+        <div class="stat-label">Report generation time</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Crack width categories</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">8</div>
+        <div class="stat-label">Report sections per analysis</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FEATURES ════════════════════════════════════════════ -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-intro">
+      <div class="section-label">Capabilities</div>
+      <h2 class="section-heading">Everything needed for concrete pathology</h2>
+    </div>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <!-- Crack detection icon -->
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 1.5" opacity="0.4"/>
+            <path d="M5 8 L8 6 L10 9 L12 5 L15 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+          </svg>
+        </div>
+        <h3>Multi-type Defect Detection</h3>
+        <p>Identifies cracks, spalling, delamination, carbonation, rebar corrosion, efflorescence, ASR map cracking, and voids from a single photograph.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <!-- Report icon -->
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="2" width="14" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M6 7 H14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M6 10 H14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity="0.6"/>
+            <path d="M6 13 H10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity="0.4"/>
+          </svg>
+        </div>
+        <h3>8-Section Engineering Reports</h3>
+        <p>Structured reports covering defect classification, visual observations, root cause analysis, severity assessment, structural risk, repair strategy, monitoring, and condition rating.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <!-- Context sliders icon -->
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 6 H17" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="7" cy="6" r="2" fill="currentColor" opacity="0.8"/>
+            <path d="M3 10 H17" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="13" cy="10" r="2" fill="currentColor" opacity="0.8"/>
+            <path d="M3 14 H17" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="9" cy="14" r="2" fill="currentColor" opacity="0.8"/>
+          </svg>
+        </div>
+        <h3>Context-Aware Analysis</h3>
+        <p>7-field site questionnaire feeds the AI — element type, exposure conditions, structure age, prior repairs, water infiltration, and more — producing far more accurate assessments than photo-only tools.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <!-- Defect map icon -->
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.4" opacity="0.5"/>
+            <path d="M4 10 L7 7 L9 10 L12 5 L16 10" stroke="#00E5FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="4" y="13" width="4" height="3" rx="1" fill="#FF00AA" opacity="0.7"/>
+          </svg>
+        </div>
+        <h3>Color-Coded AI Defect Map</h3>
+        <p>Gemini AI paints a precise overlay directly on your photo. Cracks are color-coded by measured width: cyan (hairline &lt;0.5 mm), yellow (medium 0.5–2 mm), orange (wide &gt;2 mm), magenta fills for spalling zones.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <!-- PDF export icon -->
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 3 L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M6 9 L10 13 L14 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 16 H16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>One-Click PDF Export</h3>
+        <p>Download a complete PDF including both the original and annotated images, the full 8-section structured report, and a professional engineering disclaimer — ready to share with clients or file in project records.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <!-- Mobile icon -->
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="1" width="8" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="10" cy="13" r="0.8" fill="currentColor" opacity="0.6"/>
+            <path d="M3 17 L10 14 L17 17" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+          </svg>
+        </div>
+        <h3>Field-Ready Interface</h3>
+        <p>Works on any device. Upload directly from your phone on-site and get a full report before you leave. No installation, no plugins — just a browser.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ════════════════════════════════════════ -->
+<section class="section section-alt" id="how-it-works">
+  <div class="container">
+    <div class="how-grid">
+      <div>
+        <div class="section-label">Process</div>
+        <h2 class="section-heading" style="margin-bottom:32px;">From field photo to engineering report</h2>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <h4>Upload the site photograph</h4>
+              <p>Drag and drop or click to upload any photo of a concrete surface. JPEG, PNG, and WebP supported up to 10 MB.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <h4>Complete the site questionnaire</h4>
+              <p>Answer 7 quick questions — element type, age, exposure conditions, water infiltration, prior repairs. Context significantly improves accuracy.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <h4>Claude AI produces the engineering report</h4>
+              <p>Claude analyzes the image and questionnaire together, producing a structured 8-section pathology report with defect classification, root cause analysis, and repair strategy.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">04</div>
+            <div class="step-content">
+              <h4>Gemini AI paints the color-coded defect map</h4>
+              <p>The original photo is sent to Gemini, which traces every crack and fills every spalled zone with precise color-coded overlays — classified by measured width.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="how-visual">
+        <div class="report-preview">
+          <div class="report-preview-header">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-yellow"></div>
+            <div class="dot dot-green"></div>
+            <span class="panel-title" style="margin-left:4px;">AI Pathology Report</span>
+          </div>
+          <div class="report-preview-body">
+            <div style="margin-bottom:18px;">
+              <div class="report-section-title">1. Defect classification</div>
+              <div class="report-line accent" style="width:80%;height:11px;"></div>
+            </div>
+            <div style="margin-bottom:18px;">
+              <div class="report-section-title">2. Visual observations</div>
+              <div class="report-line full"></div>
+              <div class="report-line med"></div>
+              <div class="report-line short"></div>
+            </div>
+            <div style="margin-bottom:18px;">
+              <div class="report-section-title">3. Root cause analysis</div>
+              <div class="report-line full"></div>
+              <div class="report-line med"></div>
+            </div>
+            <div style="margin-bottom:18px;">
+              <div class="report-section-title">4. Severity assessment</div>
+              <div class="severity-badge sev-high">High — Immediate intervention required</div>
+            </div>
+            <div style="margin-bottom:18px;">
+              <div class="report-section-title">5. Structural risk</div>
+              <div class="report-line full"></div>
+              <div class="report-line short"></div>
+            </div>
+            <div>
+              <div class="report-section-title">6. Repair strategy</div>
+              <div class="report-line full"></div>
+              <div class="report-line med"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CRACK CLASSIFICATION SYSTEM ═════════════════════════ -->
+<section class="section" id="classification">
+  <div class="container">
+    <div class="section-intro">
+      <div class="section-label">Defect Classification</div>
+      <h2 class="section-heading">Color-coded by crack width</h2>
+      <p style="margin-top:12px;color:var(--muted);font-size:15px;">Every crack is visually classified by its measured width. The overlay uses four distinct colors so severity is instantly readable on-site.</p>
+    </div>
+
+    <div class="classification-table">
+      <div class="class-row class-row-header">
+        <span>COLOR</span>
+        <span>CATEGORY</span>
+        <span>WIDTH THRESHOLD</span>
+        <span>TYPICAL CAUSE</span>
+      </div>
+      <div class="class-row">
+        <div class="class-color-cell">
+          <div class="class-swatch" style="background:#00E5FF;box-shadow:0 0 10px rgba(0,229,255,0.5);"></div>
+          <span class="class-color-name">Cyan</span>
+        </div>
+        <span class="class-category">Hairline / Fine</span>
+        <span class="class-width">&lt; 0.5 mm</span>
+        <span class="class-cause">Shrinkage, thermal movement, early-age stress</span>
+      </div>
+      <div class="class-row">
+        <div class="class-color-cell">
+          <div class="class-swatch" style="background:#FFE000;box-shadow:0 0 10px rgba(255,224,0,0.45);"></div>
+          <span class="class-color-name">Yellow</span>
+        </div>
+        <span class="class-category">Medium crack</span>
+        <span class="class-width">0.5 – 2 mm</span>
+        <span class="class-cause">Structural loading, ASR, carbonation-induced</span>
+      </div>
+      <div class="class-row">
+        <div class="class-color-cell">
+          <div class="class-swatch" style="background:#FF6200;box-shadow:0 0 10px rgba(255,98,0,0.5);"></div>
+          <span class="class-color-name">Orange</span>
+        </div>
+        <span class="class-category">Wide crack</span>
+        <span class="class-width">&gt; 2 mm</span>
+        <span class="class-cause">Advanced structural distress, rebar corrosion, overload</span>
+      </div>
+      <div class="class-row">
+        <div class="class-color-cell">
+          <div class="class-swatch class-swatch-fill" style="background:#FF00AA;box-shadow:0 0 10px rgba(255,0,170,0.5);"></div>
+          <span class="class-color-name">Magenta</span>
+        </div>
+        <span class="class-category">Spalling / Void</span>
+        <span class="class-width">Open zone</span>
+        <span class="class-cause">Delamination, freeze-thaw damage, rebar corrosion pressure</span>
+      </div>
+    </div>
+
+    <div class="class-note">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.3"/>
+        <path d="M7 5 V7.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        <circle cx="7" cy="9.5" r="0.6" fill="currentColor"/>
+      </svg>
+      Width classification is performed visually by Gemini AI. All results must be verified on-site by a licensed structural engineer. This tool does not replace professional inspection.
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ═════════════════════════════════════════ -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-intro">
+      <div class="section-label">Trusted by professionals</div>
+      <h2 class="section-heading">What field engineers say</h2>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-card-stars">★★★★★</div>
+        <p class="trust-card-quote">"The contextual questionnaire makes all the difference. It understands that a 40-year-old bridge deck exposed to de-icing salts is a completely different problem than a new indoor column."</p>
+        <div class="trust-card-meta">
+          <div class="trust-avatar">ML</div>
+          <div>
+            <div class="trust-name">Marc Lemieux, P.Eng.</div>
+            <div class="trust-title">Structural Engineer, Montreal</div>
+          </div>
+        </div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-card-stars">★★★★★</div>
+        <p class="trust-card-quote">"I do 20+ inspections a week. Having a preliminary AI report ready before I write my formal assessment saves hours and helps me catch things I might have flagged lower."</p>
+        <div class="trust-card-meta">
+          <div class="trust-avatar">SC</div>
+          <div>
+            <div class="trust-name">Sophie Chartrand</div>
+            <div class="trust-title">Building Inspector, Quebec City</div>
+          </div>
+        </div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-card-stars">★★★★★</div>
+        <p class="trust-card-quote">"We rolled this out to our field teams. Project managers can now get a severity estimate on-site before the engineer visits, which helps prioritize urgent repairs across the portfolio."</p>
+        <div class="trust-card-meta">
+          <div class="trust-avatar">DT</div>
+          <div>
+            <div class="trust-name">David Tran</div>
+            <div class="trust-title">Project Manager, Infrastructure Firm</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ANALYZER ═════════════════════════════════════════════ -->
+<section class="section" id="analyzer">
+  <div class="container">
+    <div class="section-intro">
+      <div class="section-label">Live Analysis</div>
+      <h2 class="section-heading">Inspect a concrete surface now</h2>
+      <p style="margin-top:12px;color:var(--muted);font-size:15px;">Upload any photo of a concrete surface, complete the site questionnaire, and receive a structured pathology report and color-coded defect map in under a minute.</p>
+    </div>
+
+    <div class="analyzer-shell">
+      <form id="analyzer-form" enctype="multipart/form-data" autocomplete="off">
+
+        <!-- Upload dropzone -->
+        <label id="upload-dropzone" class="upload-dropzone" for="photo-input">
+          <div class="upload-dropzone-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11 3 L11 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M6 8 L11 3 L16 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 16 C3 18 4 19 6 19 H16 C18 19 19 18 19 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="upload-dropzone-label">Click to upload or drag and drop</div>
+          <div class="upload-dropzone-hint">JPEG, PNG, WebP &mdash; Max 10 MB</div>
+        </label>
+        <input type="file" id="photo-input" name="image" class="hidden-file-input" accept="image/jpeg,image/png,image/webp">
+
+        <!-- Questionnaire -->
+        <div class="questionnaire-card">
+          <div class="questionnaire-header">
+            <div class="questionnaire-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="1" width="12" height="14" rx="2" stroke="currentColor" stroke-width="1.3"/>
+                <path d="M5 6 H11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                <path d="M5 9 H11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.6"/>
+                <path d="M5 12 H8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.4"/>
+              </svg>
+            </div>
+            <div>
+              <div class="questionnaire-title">Site Context Questionnaire</div>
+              <div class="questionnaire-desc">Context significantly improves report accuracy — takes 30 seconds.</div>
+            </div>
+          </div>
+          <div class="question-grid">
+
+            <div class="question-field">
+              <label for="element-type">Element Type</label>
+              <select id="element-type" name="element_type">
+                <option value="">Select element…</option>
+                <option>Column</option>
+                <option>Beam</option>
+                <option>Slab</option>
+                <option>Wall</option>
+                <option>Bridge deck</option>
+                <option>Foundation</option>
+                <option>Pavement</option>
+                <option>Retaining wall</option>
+                <option>Tunnel lining</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="question-field">
+              <label for="structure-age">Approximate Age</label>
+              <input type="text" id="structure-age" name="structure_age" placeholder="e.g. 25 years">
+            </div>
+
+            <div class="question-field">
+              <label for="exposure">Exposure Conditions</label>
+              <select id="exposure" name="exposure">
+                <option value="">Select exposure…</option>
+                <option>Indoor dry</option>
+                <option>Outdoor weather exposure</option>
+                <option>Marine / chloride exposure</option>
+                <option>Freeze-thaw exposure</option>
+                <option>Industrial / chemical exposure</option>
+                <option>De-icing salts exposure</option>
+              </select>
+            </div>
+
+            <div class="question-field">
+              <label for="water-infiltration">Water Infiltration Visible?</label>
+              <select id="water-infiltration" name="water_infiltration">
+                <option value="">Select…</option>
+                <option>Yes</option>
+                <option>No</option>
+                <option>Unknown</option>
+              </select>
+            </div>
+
+            <div class="question-field">
+              <label for="crack-evolution">Is the Defect Evolving?</label>
+              <select id="crack-evolution" name="crack_evolution">
+                <option value="">Select…</option>
+                <option>Yes</option>
+                <option>No</option>
+                <option>Unknown</option>
+              </select>
+            </div>
+
+            <div class="question-field">
+              <label for="previous-repair">Previous Repair Attempted?</label>
+              <select id="previous-repair" name="previous_repair">
+                <option value="">Select…</option>
+                <option>Yes</option>
+                <option>No</option>
+                <option>Unknown</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="question-field full" style="margin-top:14px;">
+            <label for="customer-notes">Inspector Notes</label>
+            <textarea id="customer-notes" name="customer_notes" rows="3"
+              placeholder="Observations: when it appeared, falling pieces, rust stains, leaks, load history, vibrations, previous investigations…"></textarea>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="submit-row">
+          <button type="submit" id="submit-btn" class="btn btn-primary btn-large analyze-btn">Generate Report &amp; Defect Map</button>
+        </div>
+
+        <!-- Status message -->
+        <div id="status-msg" class="status-msg"></div>
+
+        <!-- Progress steps -->
+        <div id="progress-steps" class="progress-steps">
+          <div class="step-node" id="step-analyze">
+            <div class="step-circle">1</div>
+            <div class="step-label">Claude analyzes image</div>
+          </div>
+          <div class="step-node" id="step-annotate">
+            <div class="step-circle">2</div>
+            <div class="step-label">Gemini maps defects</div>
+          </div>
+          <div class="step-node" id="step-done">
+            <div class="step-circle">✓</div>
+            <div class="step-label">Report ready</div>
+          </div>
+        </div>
+
+      </form><!-- end form -->
+
+      <!-- Results area -->
+      <div id="results-area" class="results-area">
+
+        <!-- Left column: images -->
+        <div class="image-column">
+          <div class="image-card">
+            <div class="image-card-label">
+              <span>UPLOADED PHOTO</span>
+            </div>
+            <div id="img-preview" class="image-preview-box"></div>
+          </div>
+
+          <div id="annot-card" class="image-card" style="display:none;">
+            <div class="image-card-label">
+              <span>AI DEFECT MAP</span>
+              <span id="annot-badge" class="annot-badge"></span>
+            </div>
+            <div id="annot-image-box"></div>
+            <div id="distress-table" class="distress-table" style="display:none;"></div>
+            <p class="annot-note">AI-generated overlay. Must be verified on-site by a licensed structural engineer.</p>
+          </div>
+        </div>
+
+        <!-- Right column: report -->
+        <div class="report-column">
+          <div class="report-card">
+            <div class="report-toolbar">
+              <span class="report-toolbar-label">AI Assessment Report</span>
+              <button id="download-pdf-btn" class="btn btn-success" style="padding:8px 16px;font-size:12px;" disabled>
+                ⬇ Download PDF
+              </button>
+            </div>
+            <div id="report-content"></div>
+          </div>
+        </div>
+
+      </div><!-- end results-area -->
+
+    </div><!-- end analyzer-shell -->
+  </div>
+</section>
+
+<!-- ══ CTA ══════════════════════════════════════════════════ -->
+<section class="cta-section section">
+  <div class="container">
+    <div class="cta-inner">
+      <div>
+        <div class="section-label">Start inspecting</div>
+        <h2 class="section-heading">Accelerate your field assessments</h2>
+        <p style="color:var(--muted);margin-top:10px;font-size:15px;max-width:500px;">Upload a photo and get a structured pathology report in under 60 seconds.</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="#analyzer" class="btn btn-primary btn-large">Analyze a photo now</a>
+        <a href="mailto:contact@example.com" class="btn btn-ghost btn-large">Contact us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 7 L5 4 L7 6 L9 3 L12 7" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M1 10 L4 10 L4 12 L10 12 L10 10 L13 10" stroke="white" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+            </svg>
+          </div>
+          {{ app_name }}
+        </div>
+        <p>AI-powered concrete pathology analysis for structural engineers, inspectors, and infrastructure owners.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Product</h5>
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#classification">Crack classification</a>
+        <a href="/api/docs">API Docs</a>
+      </div>
+      <div class="footer-col">
+        <h5>Methodology</h5>
+        <a href="#classification">Crack classification</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#features">Features</a>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a href="mailto:contact@example.com">Contact</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 {{ app_name }}. All rights reserved.</p>
+      <span class="footer-tag">AI-assisted &middot; Not a stamped engineering report</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>

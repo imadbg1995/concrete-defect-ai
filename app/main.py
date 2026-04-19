@@ -1,0 +1,31 @@
+import pathlib
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+
+from app.config import settings
+from app.routes import analyze, annotate, pdf
+
+app = FastAPI(title=settings.app_name, docs_url="/api/docs")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+app.include_router(analyze.router, prefix="/api")
+app.include_router(annotate.router, prefix="/api")
+app.include_router(pdf.router, prefix="/api")
+
+_HTML = pathlib.Path("templates/index.html").read_text(encoding="utf-8")
+
+
+@app.get("/", response_class=HTMLResponse)
+async def index():
+    return HTMLResponse(_HTML.replace("{{ app_name }}", settings.app_name))
