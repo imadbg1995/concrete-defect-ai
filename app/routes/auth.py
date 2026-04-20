@@ -1,3 +1,5 @@
+import sqlite3
+
 from fastapi import APIRouter, Header, HTTPException
 from pydantic import BaseModel
 
@@ -10,6 +12,13 @@ router = APIRouter()
 class AuthRequest(BaseModel):
     email: str
     password: str
+
+
+class RegisterRequest(BaseModel):
+    email: str
+    password: str
+    country: str = ""
+    phone: str = ""
 
 
 def _current_user(authorization: str = Header(None)) -> dict:
@@ -27,7 +36,7 @@ def _current_user(authorization: str = Header(None)) -> dict:
 
 
 @router.post("/register")
-def register(req: AuthRequest):
+def register(req: RegisterRequest):
     email = req.email.lower().strip()
     if not email or "@" not in email:
         raise HTTPException(400, "Please enter a valid email address.")
@@ -36,8 +45,8 @@ def register(req: AuthRequest):
     db = get_db()
     try:
         db.execute(
-            "INSERT INTO users (email, password_hash, tries_remaining) VALUES (?, ?, 3)",
-            (email, hash_password(req.password)),
+            "INSERT INTO users (email, password_hash, tries_remaining, country, phone) VALUES (?, ?, 3, ?, ?)",
+            (email, hash_password(req.password), req.country.strip(), req.phone.strip()),
         )
         db.commit()
         user = db.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
@@ -46,8 +55,10 @@ def register(req: AuthRequest):
             "email":           user["email"],
             "tries_remaining": user["tries_remaining"],
         }
-    except Exception:
-        raise HTTPException(400, "An account with this email already exists.")
+    except sqlite3.IntegrityError:
+        raise HTTPException(400, "An account with this email already exists. Please sign in instead.")
+    except Exception as e:
+        raise HTTPException(500, f"Registration failed. Please try again.")
     finally:
         db.close()
 

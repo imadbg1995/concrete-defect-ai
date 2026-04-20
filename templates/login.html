@@ -77,13 +77,16 @@
       color: var(--muted); margin-bottom: 7px; letter-spacing: .04em;
       text-transform: uppercase;
     }
-    .auth-field input {
+    .auth-field input,
+    .auth-field select {
       width: 100%; padding: 12px 16px;
       background: var(--surface); border: 1px solid var(--border-2);
       border-radius: var(--r-sm); color: var(--text); font-size: 14.5px;
       transition: border-color .18s;
     }
-    .auth-field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(224,95,26,.1); }
+    .auth-field select { appearance: none; cursor: pointer; }
+    .auth-field input:focus,
+    .auth-field select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(224,95,26,.1); }
     .auth-error {
       display: none;
       background: rgba(240,80,80,.1); border: 1px solid rgba(240,80,80,.25);
@@ -190,6 +193,26 @@
           <label>Password</label>
           <input type="password" id="auth-password" placeholder="Min. 6 characters" required autocomplete="current-password">
         </div>
+
+        <!-- Register-only fields -->
+        <div id="register-fields" style="display:none;">
+          <div class="auth-field">
+            <label>Confirm password</label>
+            <input type="password" id="auth-password2" placeholder="Repeat your password">
+          </div>
+          <div class="auth-field">
+            <label>Country</label>
+            <select id="auth-country">
+              <option value="">Select country…</option>
+              <option>Afghanistan</option><option>Albania</option><option>Algeria</option><option>Argentina</option><option>Australia</option><option>Austria</option><option>Bangladesh</option><option>Belgium</option><option>Bolivia</option><option>Brazil</option><option>Canada</option><option>Chile</option><option>China</option><option>Colombia</option><option>Croatia</option><option>Czech Republic</option><option>Denmark</option><option>Ecuador</option><option>Egypt</option><option>Ethiopia</option><option>Finland</option><option>France</option><option>Germany</option><option>Ghana</option><option>Greece</option><option>Hungary</option><option>India</option><option>Indonesia</option><option>Iran</option><option>Iraq</option><option>Ireland</option><option>Israel</option><option>Italy</option><option>Japan</option><option>Jordan</option><option>Kazakhstan</option><option>Kenya</option><option>Kuwait</option><option>Lebanon</option><option>Libya</option><option>Malaysia</option><option>Mali</option><option>Mexico</option><option>Morocco</option><option>Netherlands</option><option>New Zealand</option><option>Nigeria</option><option>Norway</option><option>Oman</option><option>Pakistan</option><option>Peru</option><option>Philippines</option><option>Poland</option><option>Portugal</option><option>Qatar</option><option>Romania</option><option>Russia</option><option>Saudi Arabia</option><option>Senegal</option><option>Serbia</option><option>South Africa</option><option>South Korea</option><option>Spain</option><option>Sri Lanka</option><option>Sudan</option><option>Sweden</option><option>Switzerland</option><option>Syria</option><option>Taiwan</option><option>Thailand</option><option>Tunisia</option><option>Turkey</option><option>Ukraine</option><option>United Arab Emirates</option><option>United Kingdom</option><option>United States</option><option>Venezuela</option><option>Vietnam</option><option>Yemen</option><option>Other</option>
+            </select>
+          </div>
+          <div class="auth-field">
+            <label>Phone number</label>
+            <input type="tel" id="auth-phone" placeholder="+1 555 000 0000">
+          </div>
+        </div>
+
         <button type="submit" id="auth-submit" class="auth-submit-btn">Sign In</button>
       </form>
 
@@ -219,6 +242,8 @@
     document.getElementById("tab-login").classList.toggle("active", isLogin);
     document.getElementById("tab-register").classList.toggle("active", !isLogin);
     document.getElementById("auth-submit").textContent = isLogin ? "Sign In" : "Create Account";
+    document.getElementById("register-fields").style.display = isLogin ? "none" : "block";
+    document.getElementById("auth-password2").required = !isLogin;
     document.getElementById("footer-note").innerHTML = isLogin
       ? 'New here? <a href="#" onclick="switchTab(\'register\');return false;">Create a free account</a> — includes 3 analyses.'
       : 'Already have an account? <a href="#" onclick="switchTab(\'login\');return false;">Sign in</a>';
@@ -233,15 +258,31 @@
     const errEl    = document.getElementById("auth-error");
     const btn      = document.getElementById("auth-submit");
 
+    // Validate confirm password on register
+    if (!isLogin) {
+      const p2 = document.getElementById("auth-password2").value;
+      if (password !== p2) {
+        errEl.textContent   = "Passwords do not match.";
+        errEl.style.display = "block";
+        return;
+      }
+    }
+
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span> ' + (isLogin ? "Signing in…" : "Creating account…");
     errEl.style.display = "none";
 
     try {
+      const body = { email, password };
+      if (!isLogin) {
+        body.country = document.getElementById("auth-country").value;
+        body.phone   = document.getElementById("auth-phone").value.trim();
+      }
+
       const res  = await fetch("/api/" + (isLogin ? "login" : "register"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(body),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || "Authentication failed.");
