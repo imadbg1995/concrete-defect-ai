@@ -2,6 +2,116 @@
 (function () {
   "use strict";
 
+  // ── Auth ─────────────────────────────────────────────────
+  function getToken()  { return localStorage.getItem("cda_token"); }
+  function getEmail()  { return localStorage.getItem("cda_email"); }
+  function getTries()  { return parseInt(localStorage.getItem("cda_tries") || "0", 10); }
+
+  function saveSession(token, email, tries) {
+    localStorage.setItem("cda_token", token);
+    localStorage.setItem("cda_email", email);
+    localStorage.setItem("cda_tries", tries);
+  }
+
+  function clearSession() {
+    localStorage.removeItem("cda_token");
+    localStorage.removeItem("cda_email");
+    localStorage.removeItem("cda_tries");
+  }
+
+  function updateUserBar(email, tries) {
+    const bar    = document.getElementById("user-bar");
+    const lbl    = document.getElementById("user-email-label");
+    const badge  = document.getElementById("tries-badge");
+    if (!bar) return;
+    bar.style.display = "flex";
+    lbl.textContent   = email;
+    badge.textContent = tries + " " + (tries === 1 ? "analysis" : "analyses") + " remaining";
+    badge.className   = "tries-badge" + (tries === 0 ? " tries-empty" : tries === 1 ? " tries-warn" : "");
+  }
+
+  function showAuthModal() {
+    const overlay = document.getElementById("auth-overlay");
+    if (overlay) overlay.style.display = "flex";
+    const bar = document.getElementById("user-bar");
+    if (bar) bar.style.display = "none";
+  }
+
+  function hideAuthModal() {
+    const overlay = document.getElementById("auth-overlay");
+    if (overlay) overlay.style.display = "none";
+  }
+
+  window.switchTab = function(tab) {
+    const isLogin = tab === "login";
+    document.getElementById("tab-login").classList.toggle("active", isLogin);
+    document.getElementById("tab-register").classList.toggle("active", !isLogin);
+    document.getElementById("auth-submit").textContent = isLogin ? "Sign In" : "Create Account";
+    document.getElementById("auth-footer-note").innerHTML = isLogin
+      ? 'New here? <a href="#" onclick="switchTab(\'register\');return false;">Create a free account</a> — includes 3 free analyses.'
+      : 'Already have an account? <a href="#" onclick="switchTab(\'login\');return false;">Sign in</a>';
+    document.getElementById("auth-error").textContent = "";
+    document.getElementById("auth-error").style.display = "none";
+  };
+
+  window.logout = function() {
+    clearSession();
+    showAuthModal();
+  };
+
+  // Auth form submit
+  const authForm = document.getElementById("auth-form");
+  if (authForm) {
+    authForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const isLogin  = document.getElementById("tab-login").classList.contains("active");
+      const email    = document.getElementById("auth-email").value.trim();
+      const password = document.getElementById("auth-password").value;
+      const errEl    = document.getElementById("auth-error");
+      const btn      = document.getElementById("auth-submit");
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>' + (isLogin ? "Signing in…" : "Creating account…");
+      errEl.style.display = "none";
+
+      try {
+        const res  = await fetch("/api/" + (isLogin ? "login" : "register"), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || "Authentication failed.");
+        saveSession(data.token, data.email, data.tries_remaining);
+        updateUserBar(data.email, data.tries_remaining);
+        hideAuthModal();
+      } catch (err) {
+        errEl.textContent   = err.message;
+        errEl.style.display = "block";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = isLogin ? "Sign In" : "Create Account";
+      }
+    });
+  }
+
+  // On page load — check if already logged in
+  (async function checkAuth() {
+    const token = getToken();
+    if (!token) { showAuthModal(); return; }
+    try {
+      const res  = await fetch("/api/me", { headers: { Authorization: "Bearer " + token } });
+      const data = await res.json();
+      if (!res.ok) throw new Error();
+      saveSession(token, data.email, data.tries_remaining);
+      updateUserBar(data.email, data.tries_remaining);
+      hideAuthModal();
+    } catch {
+      clearSession();
+      showAuthModal();
+    }
+  })();
+
   // ── DOM refs ─────────────────────────────────────────────
   const fileInput     = document.getElementById("photo-input");
   const dropzone      = document.getElementById("upload-dropzone");
@@ -313,13 +423,25 @@
       });
 
     try {
-      const r1 = await fetch("/api/analyze", { method: "POST", body: fd });
+      const token = getToken();
+      const r1 = await fetch("/api/analyze", {
+        method: "POST",
+        headers: token ? { "Authorization": "Bearer " + token } : {},
+        body: fd,
+      });
       const d1 = await r1.json();
       if (!r1.ok) throw new Error(d1.detail || "Analysis failed.");
 
       reportText = d1.report;
       reportContent.innerHTML = formatReport(reportText);
       resultsArea.classList.add("show");
+
+      // Update tries display
+      if (d1.tries_remaining !== undefined) {
+        const email = getEmail();
+        saveSession(token, email, d1.tries_remaining);
+        updateUserBar(email, d1.tries_remaining);
+      }
 
       // scroll to results
       setTimeout(() => resultsArea.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
@@ -333,7 +455,11 @@
       const fd2 = new FormData();
       fd2.append("image", currentFile);
 
-      const r2 = await fetch("/api/annotate", { method: "POST", body: fd2 });
+      const r2 = await fetch("/api/annotate", {
+        method: "POST",
+        headers: token ? { "Authorization": "Bearer " + token } : {},
+        body: fd2,
+      });
       const d2 = await r2.json();
 
       if (r2.ok && d2.annotated_b64) {

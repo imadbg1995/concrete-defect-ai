@@ -6,7 +6,9 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
+from app.database import init_db
 from app.routes import analyze, annotate, pdf
+from app.routes import auth
 
 app = FastAPI(title=settings.app_name, docs_url="/api/docs")
 
@@ -19,9 +21,14 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-app.include_router(analyze.router, prefix="/api")
+app.include_router(auth.router,     prefix="/api")
+app.include_router(analyze.router,  prefix="/api")
 app.include_router(annotate.router, prefix="/api")
-app.include_router(pdf.router, prefix="/api")
+app.include_router(pdf.router,      prefix="/api")
+
+@app.on_event("startup")
+def startup():
+    init_db()
 
 _HTML = pathlib.Path("templates/index.html").read_text(encoding="utf-8")
 

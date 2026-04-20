@@ -1,13 +1,31 @@
 import io
 
-from fastapi import APIRouter, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, File, Form, Header, HTTPException, UploadFile
 from PIL import Image as PILImage
 
+from app.auth import decode_token
 from app.config import settings
+from app.database import get_db
 from app.services.claude import call_claude
 from app.services.imaging import resize_for_api
 
 router = APIRouter()
+
+
+def _require_auth(authorization: str = None) -> dict:
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(401, "Please log in to generate a report.")
+    user_id = decode_token(authorization.split(" ", 1)[1])
+    if not user_id:
+        raise HTTPException(401, "Session expired. Please log in again.")
+    db = get_db()
+    user = db.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+    db.close()
+    if not user:
+        raise HTTPException(401, "Account not found.")
+    if user["tries_remaining"] <= 0:
+        raise HTTPException(403, "You have used all 3 of your free analyses. Contact us for more.")
+    return dict(user)
 
 
 def validate_image(data: bytes) -> None:
@@ -129,7 +147,10 @@ async def analyze(
     crack_evolution: str = Form(""),
     previous_repair: str = Form(""),
     customer_notes: str = Form(""),
+    authorization: str = Header(None),
 ):
+    user = _require_auth(authorization)
+
     image_bytes = await image.read()
     if not image_bytes:
         raise HTTPException(400, "No image data received.")
@@ -158,4 +179,11 @@ async def analyze(
     except Exception as exc:
         raise HTTPException(502, f"AI service error: {exc}") from exc
 
-    return {"report": report}
+    # Deduct one try after successful analysis
+    db = get_db()
+    db.execute("UPDATE users SET tries_remaining = tries_remaining - 1 WHERE id = ?", (user["id"],))
+    db.commit()
+    tries_left = user["tries_remaining"] - 1
+    db.close()
+
+    return {"report": report, "tries_remaining": tries_left}
