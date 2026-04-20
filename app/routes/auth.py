@@ -58,7 +58,7 @@ def register(req: RegisterRequest):
     except sqlite3.IntegrityError:
         raise HTTPException(400, "An account with this email already exists. Please sign in instead.")
     except Exception as e:
-        raise HTTPException(500, f"Registration failed. Please try again.")
+        raise HTTPException(500, f"Registration failed: {type(e).__name__}: {e}")
     finally:
         db.close()
 
