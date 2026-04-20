@@ -20,22 +20,41 @@
   }
 
   function updateUserBar(email, tries) {
-    const bar    = document.getElementById("user-bar");
-    const lbl    = document.getElementById("user-email-label");
-    const badge  = document.getElementById("tries-badge");
-    if (!bar) return;
-    bar.style.display = "flex";
-    lbl.textContent   = email;
-    badge.textContent = tries + " " + (tries === 1 ? "analysis" : "analyses") + " remaining";
-    badge.className   = "tries-badge" + (tries === 0 ? " tries-empty" : tries === 1 ? " tries-warn" : "");
+    // Update nav auth area
+    const guestBtns  = document.getElementById("nav-guest-btns");
+    const userInfo   = document.getElementById("nav-user-info");
+    const navEmail   = document.getElementById("nav-user-email");
+    const navBadge   = document.getElementById("nav-tries-badge");
+    if (guestBtns) guestBtns.style.display = "none";
+    if (userInfo)  userInfo.style.display  = "flex";
+    if (navEmail)  navEmail.textContent    = email;
+    if (navBadge) {
+      navBadge.textContent = tries + (tries === 1 ? " analysis" : " analyses") + " left";
+      navBadge.className   = "tries-badge" + (tries === 0 ? " tries-empty" : tries === 1 ? " tries-warn" : "");
+    }
+    // Show analyzer form, hide gate
+    const gate  = document.getElementById("analyzer-gate");
+    const shell = document.getElementById("analyzer-shell");
+    if (gate)  gate.style.display  = "none";
+    if (shell) shell.style.display = "block";
   }
 
-  function showAuthModal() {
+  function showGuestState() {
+    const guestBtns  = document.getElementById("nav-guest-btns");
+    const userInfo   = document.getElementById("nav-user-info");
+    if (guestBtns) guestBtns.style.display = "flex";
+    if (userInfo)  userInfo.style.display  = "none";
+    // Show gate, hide analyzer form
+    const gate  = document.getElementById("analyzer-gate");
+    const shell = document.getElementById("analyzer-shell");
+    if (gate)  gate.style.display  = "block";
+    if (shell) shell.style.display = "none";
+  }
+
+  window.showAuthModal = function() {
     const overlay = document.getElementById("auth-overlay");
     if (overlay) overlay.style.display = "flex";
-    const bar = document.getElementById("user-bar");
-    if (bar) bar.style.display = "none";
-  }
+  };
 
   function hideAuthModal() {
     const overlay = document.getElementById("auth-overlay");
@@ -56,6 +75,7 @@
 
   window.logout = function() {
     clearSession();
+    showGuestState();
     showAuthModal();
   };
 
@@ -98,17 +118,16 @@
   // On page load — check if already logged in
   (async function checkAuth() {
     const token = getToken();
-    if (!token) { showAuthModal(); return; }
+    if (!token) { showGuestState(); return; }
     try {
       const res  = await fetch("/api/me", { headers: { Authorization: "Bearer " + token } });
       const data = await res.json();
       if (!res.ok) throw new Error();
       saveSession(token, data.email, data.tries_remaining);
       updateUserBar(data.email, data.tries_remaining);
-      hideAuthModal();
     } catch {
       clearSession();
-      showAuthModal();
+      showGuestState();
     }
   })();
 
