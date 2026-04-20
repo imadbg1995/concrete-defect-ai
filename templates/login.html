@@ -233,7 +233,7 @@
 (function() {
   // If already logged in, go straight to app
   if (localStorage.getItem("cda_token")) {
-    window.location.href = "/";
+    window.location.href = "/app";
     return;
   }
 
@@ -291,7 +291,7 @@
       localStorage.setItem("cda_email", data.email);
       localStorage.setItem("cda_tries", data.tries_remaining);
 
-      window.location.href = "/";
+      window.location.href = "/app";
     } catch (err) {
       errEl.textContent   = err.message;
       errEl.style.display = "block";

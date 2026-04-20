@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Analysis Tool — {{ app_name }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <style>
+    body { min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── App header ── */
+    .app-header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,12,18,.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .app-nav {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 16px;
+      height: 64px;
+    }
+    .app-nav-left { display: flex; align-items: center; gap: 20px; }
+    .app-nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; }
+    .app-nav-divider { width: 1px; height: 20px; background: var(--border-2); }
+    .app-nav-title { font-size: 13px; color: var(--muted); font-weight: 500; }
+    .app-nav-right { display: flex; align-items: center; gap: 10px; }
+    .app-nav-email { font-size: 13px; color: var(--muted); max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .app-tries-badge {
+      font-size: 12px; font-weight: 600; padding: 4px 12px;
+      border-radius: 100px;
+      background: rgba(31,213,154,.1); color: var(--success);
+      border: 1px solid rgba(31,213,154,.2);
+    }
+    .app-tries-badge.tries-warn  { background: rgba(245,183,49,.1);  color: var(--warning); border-color: rgba(245,183,49,.2); }
+    .app-tries-badge.tries-empty { background: rgba(240,80,80,.1);   color: var(--danger);  border-color: rgba(240,80,80,.2); }
+
+    /* ── Main layout ── */
+    .app-main { flex: 1; padding: 40px 0 64px; }
+    .app-page-header { margin-bottom: 32px; }
+    .app-page-header h1 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 300; font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.1; margin-bottom: 6px;
+    }
+    .app-page-header p { font-size: 14px; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<!-- ── App header ─────────────────────────────────────── -->
+<header class="app-header">
+  <div class="container app-nav">
+    <div class="app-nav-left">
+      <a href="/" class="app-nav-brand">
+        <div class="brand-icon">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 7 L5 4 L7 6 L9 3 L12 7" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M1 10 L4 10 L4 12 L10 12 L10 10 L13 10" stroke="white" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+          </svg>
+        </div>
+        {{ app_name }}
+      </a>
+      <span class="app-nav-divider"></span>
+      <span class="app-nav-title">Analysis Tool</span>
+    </div>
+    <div class="app-nav-right">
+      <span class="app-tries-badge" id="app-tries-badge"></span>
+      <span class="app-nav-email" id="app-nav-email"></span>
+      <button class="btn btn-ghost" onclick="appLogout()" style="padding:7px 14px;font-size:13px;">Sign Out</button>
+    </div>
+  </div>
+</header>
+
+<!-- ── Main ───────────────────────────────────────────── -->
+<main class="app-main">
+  <div class="container">
+
+    <div class="app-page-header">
+      <h1>Concrete Defect Analysis</h1>
+      <p>Upload a site photo, fill in the site context, and receive your report in under 60 seconds.</p>
+    </div>
+
+    <div class="analyzer-shell" id="analyzer-shell">
+      <form id="analyzer-form" enctype="multipart/form-data" autocomplete="off">
+
+        <!-- Upload dropzone -->
+        <label id="upload-dropzone" class="upload-dropzone" for="photo-input">
+          <div class="upload-dropzone-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path d="M11 3 L11 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M6 8 L11 3 L16 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 16 C3 18 4 19 6 19 H16 C18 19 19 18 19 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="upload-dropzone-label">Click to upload or drag and drop</div>
+          <div class="upload-dropzone-hint">JPEG, PNG, WebP — Max 10 MB</div>
+        </label>
+        <input type="file" id="photo-input" name="image" class="hidden-file-input" accept="image/jpeg,image/png,image/webp">
+
+        <!-- Questionnaire -->
+        <div class="questionnaire-card">
+          <div class="questionnaire-header">
+            <div class="questionnaire-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="1" width="12" height="14" rx="2" stroke="currentColor" stroke-width="1.3"/>
+                <path d="M5 6 H11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                <path d="M5 9 H11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.6"/>
+                <path d="M5 12 H8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.4"/>
+              </svg>
+            </div>
+            <div>
+              <div class="questionnaire-title">Site Context Questionnaire</div>
+              <div class="questionnaire-desc">Context significantly improves report accuracy — takes 30 seconds.</div>
+            </div>
+          </div>
+          <div class="question-grid">
+
+            <div class="question-field">
+              <label for="element-type">Element Type</label>
+              <select id="element-type" name="element_type">
+                <option value="">Select element…</option>
+                <option>Column</option><option>Beam</option><option>Slab</option>
+                <option>Wall</option><option>Bridge deck</option><option>Foundation</option>
+                <option>Pavement</option><option>Retaining wall</option>
+                <option>Tunnel lining</option><option>Other</option>
+              </select>
+            </div>
+
+            <div class="question-field">
+              <label for="structure-age">Approximate Age</label>
+              <input type="text" id="structure-age" name="structure_age" placeholder="e.g. 25 years">
+            </div>
+
+            <div class="question-field">
+              <label for="exposure">Exposure Conditions</label>
+              <select id="exposure" name="exposure">
+                <option value="">Select exposure…</option>
+                <option>Indoor dry</option>
+                <option>Outdoor weather exposure</option>
+                <option>Marine / chloride exposure</option>
+                <option>Freeze-thaw exposure</option>
+                <option>Industrial / chemical exposure</option>
+                <option>De-icing salts exposure</option>
+              </select>
+            </div>
+
+            <div class="question-field">
+              <label for="water-infiltration">Water Infiltration Visible?</label>
+              <select id="water-infiltration" name="water_infiltration">
+                <option value="">Select…</option>
+                <option>Yes</option><option>No</option><option>Unknown</option>
+              </select>
+            </div>
+
+            <div class="question-field">
+              <label for="crack-evolution">Is the Defect Evolving?</label>
+              <select id="crack-evolution" name="crack_evolution">
+                <option value="">Select…</option>
+                <option>Yes</option><option>No</option><option>Unknown</option>
+              </select>
+            </div>
+
+            <div class="question-field">
+              <label for="previous-repair">Previous Repair Attempted?</label>
+              <select id="previous-repair" name="previous_repair">
+                <option value="">Select…</option>
+                <option>Yes</option><option>No</option><option>Unknown</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="question-field full" style="margin-top:14px;">
+            <label for="customer-notes">Inspector Notes</label>
+            <textarea id="customer-notes" name="customer_notes" rows="3"
+              placeholder="Observations: when it appeared, falling pieces, rust stains, leaks, load history, vibrations, previous investigations…"></textarea>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="submit-row">
+          <button type="submit" id="submit-btn" class="btn btn-primary btn-large analyze-btn">Generate Report &amp; Defect Map</button>
+        </div>
+
+        <!-- Status -->
+        <div id="status-msg" class="status-msg"></div>
+
+        <!-- Progress steps -->
+        <div id="progress-steps" class="progress-steps">
+          <div class="step-node" id="step-analyze">
+            <div class="step-circle">1</div>
+            <div class="step-label">Analyzing image</div>
+          </div>
+          <div class="step-node" id="step-annotate">
+            <div class="step-circle">2</div>
+            <div class="step-label">Mapping defects</div>
+          </div>
+          <div class="step-node" id="step-done">
+            <div class="step-circle">✓</div>
+            <div class="step-label">Report ready</div>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- Results area -->
+      <div id="results-area" class="results-area">
+
+        <div class="image-column">
+          <div class="image-card">
+            <div class="image-card-label"><span>UPLOADED PHOTO</span></div>
+            <div id="img-preview" class="image-preview-box"></div>
+          </div>
+          <div id="annot-card" class="image-card" style="display:none;">
+            <div class="image-card-label">
+              <span>AI DEFECT MAP</span>
+              <span id="annot-badge" class="annot-badge"></span>
+            </div>
+            <div id="annot-image-box"></div>
+            <div id="distress-table" class="distress-table" style="display:none;"></div>
+            <p class="annot-note">AI-generated overlay. Must be verified on-site by a licensed structural engineer.</p>
+          </div>
+        </div>
+
+        <div class="report-column">
+          <div class="report-card">
+            <div class="report-toolbar">
+              <span class="report-toolbar-label">AI Assessment Report</span>
+              <button id="download-pdf-btn" class="btn btn-success" style="padding:8px 16px;font-size:12px;" disabled>
+                ⬇ Download PDF
+              </button>
+            </div>
+            <div id="report-content"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+// ── Auth guard ─────────────────────────────────────────
+(function() {
+  const token = localStorage.getItem("cda_token");
+  const email = localStorage.getItem("cda_email");
+  const tries = parseInt(localStorage.getItem("cda_tries") || "0", 10);
+
+  if (!token) { window.location.href = "/login"; return; }
+
+  // Populate header
+  const badge = document.getElementById("app-tries-badge");
+  const lbl   = document.getElementById("app-nav-email");
+  if (lbl)   lbl.textContent   = email || "";
+  if (badge) {
+    badge.textContent = tries + (tries === 1 ? " analysis" : " analyses") + " left";
+    badge.className   = "app-tries-badge" + (tries === 0 ? " tries-empty" : tries === 1 ? " tries-warn" : "");
+  }
+
+  // Validate token with server in background
+  fetch("/api/me", { headers: { Authorization: "Bearer " + token } })
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(data => {
+      localStorage.setItem("cda_tries", data.tries_remaining);
+      if (badge) {
+        badge.textContent = data.tries_remaining + (data.tries_remaining === 1 ? " analysis" : " analyses") + " left";
+        badge.className   = "app-tries-badge" + (data.tries_remaining === 0 ? " tries-empty" : data.tries_remaining === 1 ? " tries-warn" : "");
+      }
+    })
+    .catch(() => { localStorage.clear(); window.location.href = "/login"; });
+})();
+
+window.appLogout = function() {
+  localStorage.removeItem("cda_token");
+  localStorage.removeItem("cda_email");
+  localStorage.removeItem("cda_tries");
+  window.location.href = "/";
+};
+</script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>

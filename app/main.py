@@ -32,6 +32,7 @@ def startup():
 
 _HTML       = pathlib.Path("templates/index.html").read_text(encoding="utf-8")
 _LOGIN_HTML = pathlib.Path("templates/login.html").read_text(encoding="utf-8")
+_APP_HTML   = pathlib.Path("templates/app_page.html").read_text(encoding="utf-8")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -42,3 +43,8 @@ async def index():
 @app.get("/login", response_class=HTMLResponse)
 async def login_page():
     return HTMLResponse(_LOGIN_HTML.replace("{{ app_name }}", settings.app_name))
+
+
+@app.get("/app", response_class=HTMLResponse)
+async def app_page():
+    return HTMLResponse(_APP_HTML.replace("{{ app_name }}", settings.app_name))

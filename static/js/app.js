@@ -455,11 +455,18 @@
       reportContent.innerHTML = formatReport(reportText);
       resultsArea.classList.add("show");
 
-      // Update tries display
+      // Update tries display (home page nav or app page badge)
       if (d1.tries_remaining !== undefined) {
         const email = getEmail();
         saveSession(token, email, d1.tries_remaining);
         updateUserBar(email, d1.tries_remaining);
+        // Also update app-page badge if present
+        const appBadge = document.getElementById("app-tries-badge");
+        if (appBadge) {
+          const t = d1.tries_remaining;
+          appBadge.textContent = t + (t === 1 ? " analysis" : " analyses") + " left";
+          appBadge.className   = "app-tries-badge" + (t === 0 ? " tries-empty" : t === 1 ? " tries-warn" : "");
+        }
       }
 
       // scroll to results
