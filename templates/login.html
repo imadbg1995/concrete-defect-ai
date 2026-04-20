@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign In — {{ app_name }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <style>
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+    .login-page {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 68px);
+    }
+    /* Left panel — branding */
+    .login-left {
+      background:
+        radial-gradient(ellipse 70% 60% at 30% 40%, rgba(224,95,26,.14) 0%, transparent 70%),
+        var(--bg-2);
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      justify-content: center; padding: 64px;
+    }
+    .login-left-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 48px; }
+    .login-left-logo .brand-icon { width: 38px; height: 38px; }
+    .login-left-logo span { font-size: 16px; font-weight: 600; }
+    .login-headline {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 300;
+      font-size: clamp(30px, 3.5vw, 46px);
+      line-height: 1.08; margin-bottom: 20px;
+    }
+    .login-headline em { font-style: italic; color: var(--accent-2); }
+    .login-subline { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 400px; margin-bottom: 40px; }
+    .login-perks { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .login-perks li {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 14px; color: var(--muted); font-weight: 500;
+    }
+    .perk-check {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: rgba(31,213,154,.12); border: 1px solid rgba(31,213,154,.25);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--success); font-size: 11px; font-weight: 700; flex-shrink: 0;
+    }
+    /* Right panel — form */
+    .login-right {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 64px 48px;
+    }
+    .login-form-box { width: 100%; max-width: 400px; }
+    .login-form-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 300; font-size: 28px; margin-bottom: 6px;
+    }
+    .login-form-sub { font-size: 14px; color: var(--muted); margin-bottom: 32px; }
+    .auth-tabs {
+      display: flex; gap: 4px;
+      background: var(--bg-3); border-radius: var(--r-sm);
+      padding: 4px; margin-bottom: 28px;
+    }
+    .auth-tab {
+      flex: 1; padding: 10px; border: none; border-radius: 7px;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      background: transparent; color: var(--muted);
+      transition: all .18s;
+    }
+    .auth-tab.active { background: var(--surface-2); color: var(--text); }
+    .auth-field { margin-bottom: 18px; }
+    .auth-field label {
+      display: block; font-size: 12px; font-weight: 600;
+      color: var(--muted); margin-bottom: 7px; letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .auth-field input {
+      width: 100%; padding: 12px 16px;
+      background: var(--surface); border: 1px solid var(--border-2);
+      border-radius: var(--r-sm); color: var(--text); font-size: 14.5px;
+      transition: border-color .18s;
+    }
+    .auth-field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(224,95,26,.1); }
+    .auth-error {
+      display: none;
+      background: rgba(240,80,80,.1); border: 1px solid rgba(240,80,80,.25);
+      color: #f08080; font-size: 13.5px; padding: 11px 16px;
+      border-radius: var(--r-sm); margin-bottom: 18px;
+    }
+    .auth-submit-btn {
+      width: 100%; padding: 14px; border: none; border-radius: var(--r-sm);
+      background: var(--accent); color: #fff;
+      font-size: 15px; font-weight: 600; cursor: pointer;
+      transition: background .18s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .auth-submit-btn:hover { background: var(--accent-2); }
+    .auth-submit-btn:disabled { opacity: .6; cursor: not-allowed; }
+    .login-footer-note {
+      margin-top: 22px; text-align: center;
+      font-size: 13.5px; color: var(--muted);
+    }
+    .login-footer-note a { color: var(--accent-2); font-weight: 500; }
+    .login-footer-note a:hover { text-decoration: underline; }
+    .back-home {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--soft); margin-top: 32px;
+      transition: color .18s;
+    }
+    .back-home:hover { color: var(--text); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      display: inline-block; width: 15px; height: 15px;
+      border: 2px solid currentColor; border-top-color: transparent;
+      border-radius: 50%; animation: spin .7s linear infinite;
+    }
+    @media (max-width: 768px) {
+      .login-page { grid-template-columns: 1fr; }
+      .login-left  { display: none; }
+      .login-right { padding: 48px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="container nav">
+    <a href="/" class="brand">
+      <div class="brand-icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7 L5 4 L7 6 L9 3 L12 7" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1 10 L4 10 L4 12 L10 12 L10 10 L13 10" stroke="white" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+        </svg>
+      </div>
+      {{ app_name }}
+    </a>
+    <a href="/" class="btn btn-ghost" style="padding:8px 18px;font-size:13.5px;">← Back to home</a>
+  </div>
+</header>
+
+<div class="login-page">
+
+  <!-- Left: branding -->
+  <div class="login-left">
+    <div class="login-left-logo">
+      <div class="brand-icon" style="width:42px;height:42px;">
+        <svg width="18" height="18" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7 L5 4 L7 6 L9 3 L12 7" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1 10 L4 10 L4 12 L10 12 L10 10 L13 10" stroke="white" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+        </svg>
+      </div>
+      <span>{{ app_name }}</span>
+    </div>
+    <h1 class="login-headline">
+      Professional concrete<br>inspection, powered by <em>AI</em>
+    </h1>
+    <p class="login-subline">
+      Upload a photo and receive a structured 8-section pathology report with a color-coded defect map — in under 60 seconds.
+    </p>
+    <ul class="login-perks">
+      <li><span class="perk-check">✓</span> 3 free analyses included with every account</li>
+      <li><span class="perk-check">✓</span> Color-coded crack map by severity</li>
+      <li><span class="perk-check">✓</span> Root cause analysis &amp; repair strategy</li>
+      <li><span class="perk-check">✓</span> One-click PDF export</li>
+      <li><span class="perk-check">✓</span> No credit card required</li>
+    </ul>
+  </div>
+
+  <!-- Right: form -->
+  <div class="login-right">
+    <div class="login-form-box">
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
+        <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Create Account</button>
+      </div>
+
+      <div id="auth-error" class="auth-error"></div>
+
+      <form id="auth-form" autocomplete="off">
+        <div class="auth-field">
+          <label>Email address</label>
+          <input type="email" id="auth-email" placeholder="you@example.com" required autocomplete="email">
+        </div>
+        <div class="auth-field">
+          <label>Password</label>
+          <input type="password" id="auth-password" placeholder="Min. 6 characters" required autocomplete="current-password">
+        </div>
+        <button type="submit" id="auth-submit" class="auth-submit-btn">Sign In</button>
+      </form>
+
+      <p class="login-footer-note" id="footer-note">
+        New here? <a href="#" onclick="switchTab('register');return false;">Create a free account</a> — includes 3 analyses.
+      </p>
+
+      <a href="/" class="back-home">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2 L3 7 L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to home
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  // If already logged in, go straight to app
+  if (localStorage.getItem("cda_token")) {
+    window.location.href = "/";
+    return;
+  }
+
+  window.switchTab = function(tab) {
+    const isLogin = tab === "login";
+    document.getElementById("tab-login").classList.toggle("active", isLogin);
+    document.getElementById("tab-register").classList.toggle("active", !isLogin);
+    document.getElementById("auth-submit").textContent = isLogin ? "Sign In" : "Create Account";
+    document.getElementById("footer-note").innerHTML = isLogin
+      ? 'New here? <a href="#" onclick="switchTab(\'register\');return false;">Create a free account</a> — includes 3 analyses.'
+      : 'Already have an account? <a href="#" onclick="switchTab(\'login\');return false;">Sign in</a>';
+    document.getElementById("auth-error").style.display = "none";
+  };
+
+  document.getElementById("auth-form").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const isLogin  = document.getElementById("tab-login").classList.contains("active");
+    const email    = document.getElementById("auth-email").value.trim();
+    const password = document.getElementById("auth-password").value;
+    const errEl    = document.getElementById("auth-error");
+    const btn      = document.getElementById("auth-submit");
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> ' + (isLogin ? "Signing in…" : "Creating account…");
+    errEl.style.display = "none";
+
+    try {
+      const res  = await fetch("/api/" + (isLogin ? "login" : "register"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail || "Authentication failed.");
+
+      localStorage.setItem("cda_token", data.token);
+      localStorage.setItem("cda_email", data.email);
+      localStorage.setItem("cda_tries", data.tries_remaining);
+
+      window.location.href = "/";
+    } catch (err) {
+      errEl.textContent   = err.message;
+      errEl.style.display = "block";
+      btn.disabled = false;
+      btn.textContent = isLogin ? "Sign In" : "Create Account";
+    }
+  });
+})();
+</script>
+</body>
+</html>

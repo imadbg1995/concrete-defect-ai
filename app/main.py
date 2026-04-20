@@ -30,9 +30,15 @@ app.include_router(pdf.router,      prefix="/api")
 def startup():
     init_db()
 
-_HTML = pathlib.Path("templates/index.html").read_text(encoding="utf-8")
+_HTML       = pathlib.Path("templates/index.html").read_text(encoding="utf-8")
+_LOGIN_HTML = pathlib.Path("templates/login.html").read_text(encoding="utf-8")
 
 
 @app.get("/", response_class=HTMLResponse)
 async def index():
     return HTMLResponse(_HTML.replace("{{ app_name }}", settings.app_name))
+
+
+@app.get("/login", response_class=HTMLResponse)
+async def login_page():
+    return HTMLResponse(_LOGIN_HTML.replace("{{ app_name }}", settings.app_name))
