@@ -71,6 +71,7 @@
       <span class="app-tries-badge" id="app-tries-badge"></span>
       <span class="app-nav-email" id="app-nav-email"></span>
       <button class="btn btn-ghost" onclick="appLogout()" style="padding:7px 14px;font-size:13px;">Sign Out</button>
+      <button class="btn btn-ghost" onclick="deleteAccount()" style="padding:7px 14px;font-size:13px;color:var(--danger);border-color:rgba(240,80,80,.25);">Delete Account</button>
     </div>
   </div>
 </header>
@@ -279,6 +280,23 @@ window.appLogout = function() {
   localStorage.removeItem("cda_email");
   localStorage.removeItem("cda_tries");
   window.location.href = "/";
+};
+
+window.deleteAccount = async function() {
+  if (!confirm("Permanently delete your account and all your data? This cannot be undone.")) return;
+  const token = localStorage.getItem("cda_token");
+  try {
+    const res = await fetch("/api/account", {
+      method: "DELETE",
+      headers: { "Authorization": "Bearer " + token }
+    });
+    if (!res.ok) throw new Error((await res.json()).detail || "Failed");
+    localStorage.clear();
+    alert("Your account has been permanently deleted.");
+    window.location.href = "/";
+  } catch (e) {
+    alert("Could not delete account: " + e.message);
+  }
 };
 </script>
 <script src="/static/js/app.js"></script>

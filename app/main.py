@@ -30,9 +30,11 @@ app.include_router(pdf.router,      prefix="/api")
 def startup():
     init_db()
 
-_HTML       = pathlib.Path("templates/index.html").read_text(encoding="utf-8")
-_LOGIN_HTML = pathlib.Path("templates/login.html").read_text(encoding="utf-8")
-_APP_HTML   = pathlib.Path("templates/app_page.html").read_text(encoding="utf-8")
+_HTML         = pathlib.Path("templates/index.html").read_text(encoding="utf-8")
+_LOGIN_HTML   = pathlib.Path("templates/login.html").read_text(encoding="utf-8")
+_APP_HTML     = pathlib.Path("templates/app_page.html").read_text(encoding="utf-8")
+_PRIVACY_HTML = pathlib.Path("templates/privacy.html").read_text(encoding="utf-8")
+_TERMS_HTML   = pathlib.Path("templates/terms.html").read_text(encoding="utf-8")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -48,3 +50,13 @@ async def login_page():
 @app.get("/app", response_class=HTMLResponse)
 async def app_page():
     return HTMLResponse(_APP_HTML.replace("{{ app_name }}", settings.app_name))
+
+
+@app.get("/privacy", response_class=HTMLResponse)
+async def privacy():
+    return HTMLResponse(_PRIVACY_HTML.replace("{{ app_name }}", settings.app_name))
+
+
+@app.get("/terms", response_class=HTMLResponse)
+async def terms():
+    return HTMLResponse(_TERMS_HTML.replace("{{ app_name }}", settings.app_name))

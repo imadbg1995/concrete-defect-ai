@@ -1,10 +1,8 @@
-import sqlite3
-
 from fastapi import APIRouter, Header, HTTPException
 from pydantic import BaseModel
 
 from app.auth import create_token, decode_token, hash_password, verify_password
-from app.database import get_db
+from app.database import IntegrityError, get_db
 
 router = APIRouter()
 
@@ -19,6 +17,7 @@ class RegisterRequest(BaseModel):
     password: str
     country: str = ""
     phone: str = ""
+    gdpr_consent: bool = False
 
 
 def _current_user(authorization: str = Header(None)) -> dict:
@@ -32,7 +31,7 @@ def _current_user(authorization: str = Header(None)) -> dict:
     db.close()
     if not user:
         raise HTTPException(401, "Account not found.")
-    return dict(user)
+    return user
 
 
 @router.post("/register")
@@ -42,11 +41,13 @@ def register(req: RegisterRequest):
         raise HTTPException(400, "Please enter a valid email address.")
     if len(req.password) < 6:
         raise HTTPException(400, "Password must be at least 6 characters.")
+    if not req.gdpr_consent:
+        raise HTTPException(400, "You must accept the Privacy Policy to create an account.")
     db = get_db()
     try:
         db.execute(
-            "INSERT INTO users (email, password_hash, tries_remaining, country, phone) VALUES (?, ?, 3, ?, ?)",
-            (email, hash_password(req.password), req.country.strip(), req.phone.strip()),
+            "INSERT INTO users (email, password_hash, tries_remaining, country, phone, gdpr_consent) VALUES (?, ?, 3, ?, ?, ?)",
+            (email, hash_password(req.password), req.country.strip(), req.phone.strip(), req.gdpr_consent),
         )
         db.commit()
         user = db.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
@@ -55,9 +56,11 @@ def register(req: RegisterRequest):
             "email":           user["email"],
             "tries_remaining": user["tries_remaining"],
         }
-    except sqlite3.IntegrityError:
-        raise HTTPException(400, "An account with this email already exists. Please sign in instead.")
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(400, "An account with this email already exists. Please sign in.")
     except Exception as e:
+        db.rollback()
         raise HTTPException(500, f"Registration failed: {type(e).__name__}: {e}")
     finally:
         db.close()
@@ -84,3 +87,18 @@ def login(req: AuthRequest):
 def me(authorization: str = Header(None)):
     user = _current_user(authorization)
     return {"email": user["email"], "tries_remaining": user["tries_remaining"]}
+
+
+@router.delete("/account")
+def delete_account(authorization: str = Header(None)):
+    user = _current_user(authorization)
+    db = get_db()
+    try:
+        db.execute("DELETE FROM users WHERE id = ?", (user["id"],))
+        db.commit()
+        return {"message": "Account deleted successfully."}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(500, f"Could not delete account: {e}")
+    finally:
+        db.close()

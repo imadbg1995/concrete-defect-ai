@@ -213,6 +213,18 @@
           </div>
         </div>
 
+        <!-- GDPR consent (register only) -->
+        <div id="gdpr-field" style="display:none;margin-bottom:18px;">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13.5px;color:var(--muted);line-height:1.6;">
+            <input type="checkbox" id="auth-gdpr" style="margin-top:3px;accent-color:var(--accent);width:15px;height:15px;flex-shrink:0;">
+            <span>I have read and agree to the
+              <a href="/privacy" target="_blank" style="color:var(--accent-2);">Privacy Policy</a>
+              and
+              <a href="/terms" target="_blank" style="color:var(--accent-2);">Terms of Service</a>.
+            </span>
+          </label>
+        </div>
+
         <button type="submit" id="auth-submit" class="auth-submit-btn">Sign In</button>
       </form>
 
@@ -243,6 +255,7 @@
     document.getElementById("tab-register").classList.toggle("active", !isLogin);
     document.getElementById("auth-submit").textContent = isLogin ? "Sign In" : "Create Account";
     document.getElementById("register-fields").style.display = isLogin ? "none" : "block";
+    document.getElementById("gdpr-field").style.display = isLogin ? "none" : "block";
     document.getElementById("auth-password2").required = !isLogin;
     document.getElementById("footer-note").innerHTML = isLogin
       ? 'New here? <a href="#" onclick="switchTab(\'register\');return false;">Create a free account</a> — includes 3 analyses.'
@@ -258,11 +271,17 @@
     const errEl    = document.getElementById("auth-error");
     const btn      = document.getElementById("auth-submit");
 
-    // Validate confirm password on register
+    // Validate register-only fields
     if (!isLogin) {
-      const p2 = document.getElementById("auth-password2").value;
+      const p2      = document.getElementById("auth-password2").value;
+      const consent = document.getElementById("auth-gdpr").checked;
       if (password !== p2) {
         errEl.textContent   = "Passwords do not match.";
+        errEl.style.display = "block";
+        return;
+      }
+      if (!consent) {
+        errEl.textContent   = "You must accept the Privacy Policy and Terms of Service.";
         errEl.style.display = "block";
         return;
       }
@@ -275,8 +294,9 @@
     try {
       const body = { email, password };
       if (!isLogin) {
-        body.country = document.getElementById("auth-country").value;
-        body.phone   = document.getElementById("auth-phone").value.trim();
+        body.country      = document.getElementById("auth-country").value;
+        body.phone        = document.getElementById("auth-phone").value.trim();
+        body.gdpr_consent = document.getElementById("auth-gdpr").checked;
       }
 
       const res  = await fetch("/api/" + (isLogin ? "login" : "register"), {
