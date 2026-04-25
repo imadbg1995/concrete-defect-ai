@@ -161,17 +161,101 @@ button, input, select, textarea { font: inherit; }
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 88px 0 76px;
+  padding: 100px 0 88px;
   border-bottom: 1px solid var(--border);
+  isolation: isolate;
 }
-.hero-bg {
+
+/* ── Layer 1: Photo background ── */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url('/static/images/hero-bg.jpg');
+  background-size: cover;
+  background-position: left center;
+  background-repeat: no-repeat;
+  /* Subtle desaturation so it blends with the dark navy UI */
+  filter: saturate(0.75) brightness(0.9);
+  z-index: -3;
+  will-change: transform; /* GPU-composited, no jank */
+}
+
+/* ── Layer 2: Directional dark overlay (left light → right heavy) ── */
+.hero::after {
+  content: '';
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 60% 50% at 20% 40%, rgba(224,95,26,.1) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 60% at 80% 60%, rgba(255,122,53,.06) 0%, transparent 60%);
+    /* left edge: very light — shows concrete texture */
+    linear-gradient(
+      to right,
+      rgba(10, 15, 25, 0.35) 0%,
+      rgba(10, 15, 25, 0.55) 35%,
+      rgba(10, 15, 25, 0.82) 65%,
+      rgba(10, 15, 25, 0.93) 100%
+    ),
+    /* Vignette top/bottom for cinematic depth */
+    linear-gradient(
+      to bottom,
+      rgba(10, 15, 25, 0.30) 0%,
+      transparent 25%,
+      transparent 75%,
+      rgba(10, 15, 25, 0.40) 100%
+    ),
+    /* Orange accent glow — matches brand, subtle warm cast on left */
+    radial-gradient(ellipse 50% 70% at 15% 50%, rgba(224, 95, 26, 0.12) 0%, transparent 65%);
+  z-index: -2;
   pointer-events: none;
 }
-.hero-grid { display: grid; grid-template-columns: 1fr; gap: 56px; align-items: center; max-width: 720px; }
+
+/* ── Layer 3: Legacy .hero-bg (accent glows, kept for any JS hooks) ── */
+.hero-bg {
+  position: absolute; inset: 0; z-index: -1;
+  pointer-events: none;
+}
+
+/* ── Text contrast boost: soften backdrop behind copy block ── */
+.hero-content {
+  position: relative;
+}
+.hero-content::before {
+  content: '';
+  position: absolute;
+  inset: -32px -28px;
+  border-radius: 20px;
+  background: rgba(8, 12, 20, 0.22);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ── Mobile: shift focus, re-tune overlay ── */
+@media (max-width: 768px) {
+  .hero::before {
+    background-position: 20% center;
+  }
+  .hero::after {
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(10, 15, 25, 0.55) 0%,
+        rgba(10, 15, 25, 0.70) 100%
+      ),
+      radial-gradient(ellipse 80% 50% at 20% 60%, rgba(224, 95, 26, 0.10) 0%, transparent 70%);
+  }
+  .hero-content::before { display: none; }
+}
+/* 2-col split: left = image visible through overlay, right = text */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  align-items: center;
+  min-height: 560px;
+}
+.hero-visual-spacer { /* left col — purely decorative, image shows through */
+  min-height: 480px;
+}
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
@@ -729,6 +813,7 @@ button, input, select, textarea { font: inherit; }
    ========================================================= */
 @media (max-width: 1024px) {
   .hero-grid, .how-grid, .cta-inner { grid-template-columns: 1fr; }
+  .hero-visual-spacer { display: none; }
   .trust-grid   { grid-template-columns: 1fr; }
   .footer-grid  { grid-template-columns: 1fr 1fr; }
   .how-visual   { position: static; }
