@@ -19,12 +19,9 @@
     .legal-page ul { padding-left: 20px; margin-bottom: 14px; }
     .legal-page li { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 6px; }
     .legal-page strong { color: var(--text); }
-    .legal-highlight {
-      background: var(--surface); border: 1px solid var(--border-2);
-      border-radius: var(--r-md); padding: 18px 22px; margin: 20px 0;
-      font-size: 14px; color: var(--muted); line-height: 1.7;
-    }
+    .legal-highlight { background: var(--surface); border: 1px solid var(--border-2); border-radius: var(--r-md); padding: 18px 22px; margin: 20px 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
     .legal-highlight strong { color: var(--accent-2); }
+    .info-box { background: rgba(31,213,154,.06); border: 1px solid rgba(31,213,154,.2); border-radius: var(--r-md); padding: 16px 20px; margin: 16px 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
     hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
   </style>
 </head>
@@ -50,109 +47,171 @@
 
     <div class="legal-eyebrow">Legal</div>
     <h1 class="legal-title">Privacy Policy</h1>
-    <p class="legal-meta">Last updated: April 2025 &nbsp;·&nbsp; Applies to {{ app_name }} and all its services</p>
+    <p class="legal-meta">
+      Last updated: <strong>April 26, 2026</strong> &nbsp;·&nbsp;
+      Applies to {{ app_name }} and all its services &nbsp;·&nbsp;
+      Effective for users in Canada, the United States, and internationally
+    </p>
 
     <div class="legal-highlight">
-      <strong>Short version:</strong> We collect your email, country, and phone number to create your account.
-      Photos you upload are processed by AI and <strong>never stored</strong> on our servers.
-      We do not sell your data to anyone.
+      <strong>Plain language summary:</strong> We collect your email, country, and phone number to create your account.
+      Photos you upload are sent to AI providers for processing and are <strong>never stored</strong> on our servers.
+      We do not sell, rent, or trade your personal data. You can delete your account and all data at any time.
     </div>
 
-    <h2>1. Who We Are</h2>
-    <p>{{ app_name }} is an AI-assisted concrete defect analysis tool. We provide preliminary visual inspection reports based on photographs submitted by our users. References to "we", "us", or "our" refer to the operator of this service.</p>
-    <p>Contact: <strong>contact@concretedefectai.com</strong></p>
+    <h2>1. Who We Are and How to Contact Us</h2>
+    <p>{{ app_name }} is an AI-assisted concrete and pavement defect analysis platform operated as a private service. The operator is responsible for the personal information collected through this platform.</p>
+    <p><strong>Privacy Officer / Data Controller Contact:</strong><br>
+    Email: <strong>contact@concretedefectai.com</strong><br>
+    Subject line: "Privacy Request — {{ app_name }}"</p>
+    <p>We will acknowledge all privacy-related requests within <strong>5 business days</strong> and respond fully within <strong>30 days</strong> (or sooner as required by applicable law).</p>
 
-    <h2>2. Data We Collect</h2>
+    <hr>
 
-    <h3>Account data (collected at registration)</h3>
+    <h2>2. Scope and Applicable Law</h2>
+    <p>This Privacy Policy is designed to comply with the following applicable laws:</p>
     <ul>
-      <li><strong>Email address</strong> — used to identify your account and for communication</li>
-      <li><strong>Password</strong> — stored as a one-way cryptographic hash (bcrypt). We cannot read your password.</li>
-      <li><strong>Country</strong> — used for regional service compliance</li>
-      <li><strong>Phone number</strong> — optional, used for account recovery</li>
-      <li><strong>Consent record</strong> — date and confirmation you agreed to this policy</li>
+      <li><strong>Canada:</strong> Personal Information Protection and Electronic Documents Act (PIPEDA), Quebec Act respecting the protection of personal information in the private sector (Law 25 / Bill 64)</li>
+      <li><strong>United States:</strong> California Consumer Privacy Act (CCPA) as amended by the California Privacy Rights Act (CPRA); applicable state privacy laws</li>
+      <li><strong>Internationally:</strong> General Data Protection Regulation (GDPR) where applicable</li>
     </ul>
 
-    <h3>Usage data (automatically collected)</h3>
+    <hr>
+
+    <h2>3. Personal Information We Collect</h2>
+
+    <h3>Information you provide at registration</h3>
     <ul>
-      <li>Number of analyses performed (tries remaining)</li>
-      <li>Account creation date</li>
+      <li><strong>Email address</strong> — required, used to identify your account</li>
+      <li><strong>Password</strong> — required, stored as a one-way bcrypt cryptographic hash. We cannot read or recover your password.</li>
+      <li><strong>Country</strong> — required, used for regional compliance and service delivery</li>
+      <li><strong>Phone number</strong> — optional, provided voluntarily</li>
+      <li><strong>Consent records</strong> — timestamp and confirmation that you accepted this Privacy Policy and Terms of Service, as required by law</li>
     </ul>
 
-    <h3>What we do NOT collect</h3>
+    <h3>Information collected automatically</h3>
     <ul>
-      <li><strong>Photos you upload</strong> — processed in memory and immediately discarded. Never written to disk or stored in any database.</li>
-      <li><strong>Reports generated</strong> — exist only in your browser session. Not stored on our servers.</li>
+      <li>Number of analyses performed and remaining (service usage counter)</li>
+      <li>Account creation timestamp</li>
+      <li><strong>Session authentication token</strong> — a JWT (JSON Web Token) stored in your browser's localStorage. This token authenticates your session and expires after 30 days. It is not a cookie and does not track browsing activity.</li>
+    </ul>
+
+    <h3>Information we do NOT collect or retain</h3>
+    <ul>
+      <li><strong>Photographs you upload</strong> — transmitted to AI providers for processing only, then immediately discarded. Never written to our disk or stored in our database.</li>
+      <li><strong>AI-generated reports</strong> — exist only in your browser session. Not stored on our servers.</li>
+      <li>IP addresses or geolocation data</li>
       <li>Cookies, tracking pixels, or advertising identifiers</li>
-      <li>IP addresses or precise location data</li>
+      <li>Browsing history or behavioral profiling data</li>
     </ul>
 
     <hr>
 
-    <h2>3. How We Use Your Data</h2>
+    <h2>4. Legal Basis and Purposes for Processing</h2>
+    <p>We collect and process your personal information only for the following purposes, with the following legal bases:</p>
     <ul>
-      <li>To create and manage your account</li>
-      <li>To authenticate you when you sign in</li>
-      <li>To track the number of free analyses used</li>
-      <li>To respond to support or data requests</li>
+      <li><strong>Account creation and authentication</strong> — based on your explicit consent at registration</li>
+      <li><strong>Service delivery</strong> — necessary to fulfill the contract you entered into by creating an account</li>
+      <li><strong>Usage tracking</strong> (analyses remaining) — necessary for legitimate service management</li>
+      <li><strong>Legal compliance</strong> — retaining consent records as required by privacy law</li>
     </ul>
-    <p>We do not use your data for advertising, profiling, or any purpose beyond providing this service.</p>
+    <p>We do not use your personal information for advertising, behavioral profiling, automated decision-making with legal effects, or any purpose beyond the above.</p>
 
     <hr>
 
-    <h2>4. Third-Party AI Services</h2>
-    <p>To generate inspection reports and defect maps, your uploaded photos are transmitted to:</p>
+    <h2>5. Third-Party AI Service Providers</h2>
+    <p>To generate inspection reports and defect maps, photographs you upload are transmitted to the following third-party AI providers:</p>
     <ul>
-      <li><strong>Anthropic</strong> (claude.ai) — for structured report generation</li>
-      <li><strong>Google</strong> (Gemini API) — for defect map image generation</li>
+      <li><strong>Anthropic, PBC</strong> (United States) — processes images to generate structured pathology reports via the Claude API. Privacy policy: anthropic.com/privacy</li>
+      <li><strong>Google LLC</strong> (United States) — processes images to generate color-coded defect maps via the Gemini API. Privacy policy: policies.google.com/privacy</li>
     </ul>
-    <p>These providers process images only to respond to the API request. Neither provider stores images after processing. Refer to their privacy policies for full details.</p>
-    <p>We do not share any account data (email, phone, country) with these providers.</p>
+    <div class="info-box">
+      <strong>Cross-border data transfer notice (PIPEDA / Law 25):</strong> Your photographs are transmitted to AI providers located in the United States. By using this service, you acknowledge that your uploaded images will be processed outside Canada. These providers are subject to the laws of their respective jurisdictions. We have reviewed their API terms and confirmed they do not train on or retain API-submitted data beyond the request. However, we recommend reviewing their privacy policies directly.
+    </div>
+    <p>We do not share your account data (email, phone number, country) with these or any other third parties.</p>
 
     <hr>
 
-    <h2>5. Data Storage and Security</h2>
+    <h2>6. Data Storage and Security</h2>
     <ul>
-      <li>Account data is stored in a PostgreSQL database hosted in a secured cloud environment</li>
-      <li>All connections are encrypted via HTTPS/TLS</li>
-      <li>Passwords are hashed with bcrypt and cannot be reversed</li>
-      <li>Authentication tokens expire after 30 days</li>
-      <li>Photos are never written to disk — they exist only in server memory during processing</li>
+      <li>Account data is stored in a PostgreSQL database hosted on a secured cloud infrastructure</li>
+      <li>All data in transit is encrypted using HTTPS/TLS</li>
+      <li>Passwords are hashed using bcrypt with salt — they cannot be reversed or read</li>
+      <li>Session tokens are JWT-signed and expire after 30 days</li>
+      <li>Photographs are never written to disk — they exist only in server memory during the API call</li>
+      <li>We do not store payment card information (no payment processing is performed)</li>
     </ul>
 
-    <hr>
-
-    <h2>6. Your Rights (GDPR &amp; Global)</h2>
-    <p>You have the following rights regarding your personal data:</p>
+    <h3>Data breach notification</h3>
+    <p>In the event of a data breach posing a real risk of significant harm to users, we will:</p>
     <ul>
-      <li><strong>Right of access</strong> — request a copy of your stored data</li>
-      <li><strong>Right to rectification</strong> — correct inaccurate data</li>
-      <li><strong>Right to erasure</strong> — permanently delete your account and all associated data</li>
-      <li><strong>Right to object</strong> — object to processing of your data</li>
-      <li><strong>Right to portability</strong> — receive your data in a structured format</li>
+      <li>Notify affected users by email as soon as reasonably practicable</li>
+      <li>Report to the Office of the Privacy Commissioner of Canada (OPC) as required under PIPEDA</li>
+      <li>Report to the Commission d'accès à l'information (CAI) within 72 hours for Quebec residents, as required under Law 25</li>
+      <li>Report to relevant US state authorities as required by applicable state breach notification laws</li>
     </ul>
-    <p>To exercise any of these rights, email us at <strong>contact@concretedefectai.com</strong>. We will respond within 30 days. You can also delete your account instantly from within the application.</p>
 
     <hr>
 
-    <h2>7. Data Retention</h2>
-    <p>We keep your account data for as long as your account exists. When you delete your account, all personal data is permanently and immediately removed from our database.</p>
+    <h2>7. Your Rights — Canada (PIPEDA / Quebec Law 25)</h2>
+    <p>If you are located in Canada, you have the following rights under PIPEDA and Quebec Law 25:</p>
+    <ul>
+      <li><strong>Right of access</strong> — request a copy of the personal information we hold about you</li>
+      <li><strong>Right to correction</strong> — request correction of inaccurate or incomplete information</li>
+      <li><strong>Right to erasure</strong> — request permanent deletion of your account and all associated data. You can also do this directly in the app.</li>
+      <li><strong>Right to withdraw consent</strong> — withdraw consent at any time (note: withdrawal may prevent use of the service)</li>
+      <li><strong>Right to lodge a complaint</strong> — file a complaint with the Office of the Privacy Commissioner of Canada (priv.gc.ca) or the Commission d'accès à l'information du Québec (cai.quebec.ca)</li>
+    </ul>
 
     <hr>
 
-    <h2>8. Children</h2>
-    <p>This service is intended for professional use by adults (18+). We do not knowingly collect data from minors. If you believe a minor has registered, contact us for immediate deletion.</p>
+    <h2>8. Your Rights — United States (CCPA / CPRA)</h2>
+    <p>If you are a California resident, you have the following rights under the CCPA and CPRA:</p>
+    <ul>
+      <li><strong>Right to know</strong> — request disclosure of the categories and specific pieces of personal information we have collected about you</li>
+      <li><strong>Right to delete</strong> — request deletion of your personal information</li>
+      <li><strong>Right to correct</strong> — request correction of inaccurate personal information</li>
+      <li><strong>Right to opt-out of sale or sharing</strong> — we <strong>do not sell or share</strong> your personal information with third parties for their own marketing or commercial purposes. No opt-out mechanism is required, but you may contact us to confirm.</li>
+      <li><strong>Right to non-discrimination</strong> — we will not discriminate against you for exercising any CCPA rights</li>
+      <li><strong>Right to limit use of sensitive information</strong> — we do not use sensitive personal information for purposes beyond service delivery</li>
+    </ul>
+    <p>Residents of Virginia, Colorado, Connecticut, Texas, and other US states with comprehensive privacy laws have similar rights and may contact us using the information in Section 1.</p>
 
     <hr>
 
-    <h2>9. Changes to This Policy</h2>
-    <p>If we make material changes, we will update the date at the top of this page. Continued use of the service after changes constitutes acceptance of the updated policy.</p>
+    <h2>9. Your Rights — European Union (GDPR)</h2>
+    <p>If you are located in the EU/EEA, you have all rights listed above plus the right to data portability and the right to lodge a complaint with your local supervisory authority.</p>
 
     <hr>
 
-    <h2>10. Contact</h2>
-    <p>For any privacy-related questions or data requests:<br>
-    <strong>Email:</strong> contact@concretedefectai.com</p>
+    <h2>10. Data Retention</h2>
+    <p>We retain your personal information for as long as your account remains active. When you delete your account — whether through the app or by emailing us — all personal data associated with your account is permanently and irreversibly deleted from our database within <strong>30 days</strong> of the request (typically immediately).</p>
+    <p>Consent records may be retained for an additional period after deletion to comply with legal recordkeeping obligations.</p>
+
+    <hr>
+
+    <h2>11. Children's Privacy</h2>
+    <p>This service is intended exclusively for professional use by adults aged <strong>18 and over</strong>. We do not knowingly collect personal information from individuals under 18 years of age. If we become aware that a minor has registered, we will delete the account immediately. If you believe a minor has registered, please contact us immediately.</p>
+    <p>This service is not subject to COPPA (Children's Online Privacy Protection Act) as it is not directed at children under 13.</p>
+
+    <hr>
+
+    <h2>12. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. If we make <strong>material changes</strong>, we will notify you by sending an email to the address on your account at least <strong>14 days before</strong> the changes take effect. Minor changes (corrections, clarifications) may be made without notice.</p>
+    <p>The updated date at the top of this page will always reflect the date of the last revision. Continued use of the service after notice of material changes constitutes your acceptance of the updated policy.</p>
+
+    <hr>
+
+    <h2>13. Contact and Complaints</h2>
+    <p>For any privacy-related questions, requests, or complaints, contact our Privacy Officer:</p>
+    <p><strong>Email:</strong> contact@concretedefectai.com<br>
+    Please include "Privacy Request" in the subject line and specify your request (access, deletion, correction, complaint, etc.).</p>
+    <p>If you are not satisfied with our response, you have the right to contact the relevant supervisory authority:</p>
+    <ul>
+      <li><strong>Canada:</strong> Office of the Privacy Commissioner — priv.gc.ca</li>
+      <li><strong>Quebec:</strong> Commission d'accès à l'information — cai.quebec.ca</li>
+      <li><strong>United States (California):</strong> California Privacy Protection Agency — cppa.ca.gov</li>
+    </ul>
 
   </div>
 </div>
@@ -160,7 +219,7 @@
 <footer class="site-footer">
   <div class="container">
     <div class="footer-bottom" style="border-top:none;">
-      <p>&copy; 2025 {{ app_name }}. All rights reserved.</p>
+      <p>&copy; 2026 {{ app_name }}. All rights reserved.</p>
       <div style="display:flex;gap:20px;">
         <a href="/privacy" style="font-size:13px;color:var(--soft);">Privacy Policy</a>
         <a href="/terms" style="font-size:13px;color:var(--soft);">Terms of Service</a>

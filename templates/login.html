@@ -213,14 +213,20 @@
           </div>
         </div>
 
-        <!-- GDPR consent (register only) -->
-        <div id="gdpr-field" style="display:none;margin-bottom:18px;">
-          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13.5px;color:var(--muted);line-height:1.6;">
+        <!-- Consent checkboxes (register only) — separate as required by PIPEDA/CCPA -->
+        <div id="gdpr-field" style="display:none;margin-bottom:6px;">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:10px;">
             <input type="checkbox" id="auth-gdpr" style="margin-top:3px;accent-color:var(--accent);width:15px;height:15px;flex-shrink:0;">
             <span>I have read and agree to the
               <a href="/privacy" target="_blank" style="color:var(--accent-2);">Privacy Policy</a>
-              and
-              <a href="/terms" target="_blank" style="color:var(--accent-2);">Terms of Service</a>.
+              — including the collection of my email, country, and phone number.
+            </span>
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13.5px;color:var(--muted);line-height:1.6;">
+            <input type="checkbox" id="auth-terms" style="margin-top:3px;accent-color:var(--accent);width:15px;height:15px;flex-shrink:0;">
+            <span>I have read and agree to the
+              <a href="/terms" target="_blank" style="color:var(--accent-2);">Terms of Service</a>
+              — including that AI outputs are not certified engineering documents.
             </span>
           </label>
         </div>
@@ -280,8 +286,14 @@
         errEl.style.display = "block";
         return;
       }
+      const termsConsent = document.getElementById("auth-terms").checked;
       if (!consent) {
-        errEl.textContent   = "You must accept the Privacy Policy and Terms of Service.";
+        errEl.textContent   = "You must accept the Privacy Policy to create an account.";
+        errEl.style.display = "block";
+        return;
+      }
+      if (!termsConsent) {
+        errEl.textContent   = "You must accept the Terms of Service to create an account.";
         errEl.style.display = "block";
         return;
       }
