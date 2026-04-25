@@ -146,6 +146,21 @@ button, input, select, textarea { font: inherit; }
   font-size: 10px; font-weight: 800; color: #fff;
   flex-shrink: 0;
 }
+/* Real logo image — replaces SVG brand-icon */
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+.brand-logo-lg {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
 .menu { display: flex; align-items: center; gap: 4px; }
 .menu a {
   font-size: 13.5px; color: var(--muted);
