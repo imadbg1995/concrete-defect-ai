@@ -148,8 +148,8 @@ button, input, select, textarea { font: inherit; }
 }
 /* Real logo image — replaces SVG brand-icon */
 .brand-logo {
-  width: 58px;
-  height: 58px;
+  width: 75px;
+  height: 75px;
   object-fit: contain;
   flex-shrink: 0;
   display: block;
