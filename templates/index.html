@@ -25,20 +25,24 @@
       {{ app_name }}
     </a>
     <nav class="menu">
-      <a href="#features">Features</a>
-      <a href="#how-it-works">How it works</a>
-      <a href="#classification">Classification</a>
-      <a href="#analyzer">Analyzer</a>
+      <a href="#features" data-i18n="nav.features">Features</a>
+      <a href="#how-it-works" data-i18n="nav.how">How it works</a>
+      <a href="#classification" data-i18n="nav.classif">Classification</a>
+      <a href="#analyzer" data-i18n="nav.analyzer">Analyzer</a>
     </nav>
     <div class="nav-auth-area">
+      <div class="lang-toggle" style="margin-right:8px;">
+        <button class="lang-btn active" data-lang="en" onclick="i18n.set('en')">EN</button>
+        <button class="lang-btn" data-lang="fr" onclick="i18n.set('fr')">FR</button>
+      </div>
       <div id="nav-guest-btns">
-        <a href="/login" class="btn btn-ghost nav-signin-btn">Sign In</a>
-        <a href="/login" class="btn btn-primary nav-cta">Get Started Free</a>
+        <a href="/login" class="btn btn-ghost nav-signin-btn" data-i18n="nav.signin">Sign In</a>
+        <a href="/login" class="btn btn-primary nav-cta" data-i18n="nav.started">Get Started Free</a>
       </div>
       <div id="nav-user-info" style="display:none;">
         <span id="nav-tries-badge" class="tries-badge"></span>
-        <a href="/app" class="btn btn-primary nav-cta">Open App</a>
-        <button class="btn btn-ghost nav-signout-btn" onclick="logout()">Sign Out</button>
+        <a href="/app" class="btn btn-primary nav-cta" data-i18n="nav.openapp">Open App</a>
+        <button class="btn btn-ghost nav-signout-btn" onclick="logout()" data-i18n="nav.signout">Sign Out</button>
       </div>
     </div>
   </div>
@@ -52,24 +56,24 @@
     <div class="hero-content">
       <div class="hero-eyebrow">
         <span class="eyebrow-dot"></span>
-        AI-Powered Structural Inspection
+        <span data-i18n="hero.eyebrow">AI-Powered Structural Inspection</span>
       </div>
-      <h1 class="hero-title">
+      <h1 class="hero-title" data-i18n-html="hero.title">
         Concrete pathology analysis in <em>seconds</em>
       </h1>
-      <p class="hero-desc">
+      <p class="hero-desc" data-i18n="hero.desc">
         Upload a site photo — receive a color-coded defect map and a structured 8-section engineering report. Built for inspectors, engineers, and infrastructure owners.
       </p>
       <ul class="hero-checks">
-        <li>Color-coded crack map by width</li>
-        <li>8-section engineering report</li>
-        <li>Severity & PCI classification</li>
-        <li>Root cause analysis</li>
-        <li>One-click PDF export</li>
+        <li data-i18n="hero.check1">Color-coded crack map by width</li>
+        <li data-i18n="hero.check2">8-section engineering report</li>
+        <li data-i18n="hero.check3">Severity &amp; PCI classification</li>
+        <li data-i18n="hero.check4">Root cause analysis</li>
+        <li data-i18n="hero.check5">One-click PDF export</li>
       </ul>
       <div class="hero-actions">
-        <a href="/login" class="btn btn-primary btn-large">Start Free — 3 Analyses Included</a>
-        <a href="#how-it-works" class="btn btn-ghost btn-large">See the process</a>
+        <a href="/login" class="btn btn-primary btn-large" data-i18n="hero.cta1">Start Free — 3 Analyses Included</a>
+        <a href="#how-it-works" class="btn btn-ghost btn-large" data-i18n="hero.cta2">See the process</a>
       </div>
     </div>
 
@@ -82,19 +86,19 @@
     <div class="stats-grid">
       <div class="stat-item">
         <div class="stat-num">12+</div>
-        <div class="stat-label">Defect types recognized</div>
+        <div class="stat-label" data-i18n="stat.defects">Defect types recognized</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">&lt;60s</div>
-        <div class="stat-label">Report generation time</div>
+        <div class="stat-label" data-i18n="stat.time">Report generation time</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">4</div>
-        <div class="stat-label">Crack width categories</div>
+        <div class="stat-label" data-i18n="stat.widths">Crack width categories</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">8</div>
-        <div class="stat-label">Report sections per analysis</div>
+        <div class="stat-label" data-i18n="stat.sections">Report sections per analysis</div>
       </div>
     </div>
   </div>
@@ -104,27 +108,25 @@
 <section class="section" id="features">
   <div class="container">
     <div class="section-intro">
-      <div class="section-label">Capabilities</div>
-      <h2 class="section-heading">Everything needed for concrete pathology</h2>
+      <div class="section-label" data-i18n="feat.label">Capabilities</div>
+      <h2 class="section-heading" data-i18n="feat.heading">Everything needed for concrete pathology</h2>
     </div>
     <div class="features-grid">
 
       <div class="feature-card">
         <div class="feature-icon">
-          <!-- Crack detection icon -->
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 1.5" opacity="0.4"/>
             <path d="M5 8 L8 6 L10 9 L12 5 L15 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             <circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
           </svg>
         </div>
-        <h3>Multi-type Defect Detection</h3>
-        <p>Identifies cracks, spalling, delamination, carbonation, rebar corrosion, efflorescence, ASR map cracking, and voids from a single photograph.</p>
+        <h3 data-i18n="feat1.title">Multi-type Defect Detection</h3>
+        <p data-i18n="feat1.desc">Identifies cracks, spalling, delamination, carbonation, rebar corrosion, efflorescence, ASR map cracking, and voids from a single photograph.</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon">
-          <!-- Report icon -->
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="3" y="2" width="14" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/>
             <path d="M6 7 H14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
@@ -132,13 +134,12 @@
             <path d="M6 13 H10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity="0.4"/>
           </svg>
         </div>
-        <h3>8-Section Engineering Reports</h3>
-        <p>Structured reports covering defect classification, visual observations, root cause analysis, severity assessment, structural risk, repair strategy, monitoring, and condition rating.</p>
+        <h3 data-i18n="feat2.title">8-Section Engineering Reports</h3>
+        <p data-i18n="feat2.desc">Structured reports covering defect classification, visual observations, root cause analysis, severity assessment, structural risk, repair strategy, monitoring, and condition rating.</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon">
-          <!-- Context sliders icon -->
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 6 H17" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
             <circle cx="7" cy="6" r="2" fill="currentColor" opacity="0.8"/>
@@ -148,47 +149,44 @@
             <circle cx="9" cy="14" r="2" fill="currentColor" opacity="0.8"/>
           </svg>
         </div>
-        <h3>Context-Aware Analysis</h3>
-        <p>7-field site questionnaire feeds the AI — element type, exposure conditions, structure age, prior repairs, water infiltration, and more — producing far more accurate assessments than photo-only tools.</p>
+        <h3 data-i18n="feat3.title">Context-Aware Analysis</h3>
+        <p data-i18n="feat3.desc">7-field site questionnaire feeds the AI — element type, exposure conditions, structure age, prior repairs, water infiltration, and more — producing far more accurate assessments than photo-only tools.</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon">
-          <!-- Defect map icon -->
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.4" opacity="0.5"/>
             <path d="M4 10 L7 7 L9 10 L12 5 L16 10" stroke="#00E5FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             <rect x="4" y="13" width="4" height="3" rx="1" fill="#FF00AA" opacity="0.7"/>
           </svg>
         </div>
-        <h3>Color-Coded AI Defect Map</h3>
-        <p>Our vision AI paints a precise overlay directly on your photo. Cracks are color-coded by measured width: cyan (hairline &lt;0.5 mm), yellow (medium 0.5–2 mm), orange (wide &gt;2 mm), magenta fills for spalling zones.</p>
+        <h3 data-i18n="feat4.title">Color-Coded AI Defect Map</h3>
+        <p data-i18n="feat4.desc">Our vision AI paints a precise overlay directly on your photo. Cracks are color-coded by measured width: cyan (hairline &lt;0.5 mm), yellow (medium 0.5–2 mm), orange (wide &gt;2 mm), magenta fills for spalling zones.</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon">
-          <!-- PDF export icon -->
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 3 L10 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
             <path d="M6 9 L10 13 L14 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M4 16 H16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
           </svg>
         </div>
-        <h3>One-Click PDF Export</h3>
-        <p>Download a complete PDF including both the original and annotated images, the full 8-section structured report, and a professional engineering disclaimer — ready to share with clients or file in project records.</p>
+        <h3 data-i18n="feat5.title">One-Click PDF Export</h3>
+        <p data-i18n="feat5.desc">Download a complete PDF including both the original and annotated images, the full 8-section structured report, and a professional engineering disclaimer — ready to share with clients or file in project records.</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon">
-          <!-- Mobile icon -->
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="6" y="1" width="8" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/>
             <circle cx="10" cy="13" r="0.8" fill="currentColor" opacity="0.6"/>
             <path d="M3 17 L10 14 L17 17" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
           </svg>
         </div>
-        <h3>Field-Ready Interface</h3>
-        <p>Works on any device. Upload directly from your phone on-site and get a full report before you leave. No installation, no plugins — just a browser.</p>
+        <h3 data-i18n="feat6.title">Field-Ready Interface</h3>
+        <p data-i18n="feat6.desc">Works on any device. Upload directly from your phone on-site and get a full report before you leave. No installation, no plugins — just a browser.</p>
       </div>
 
     </div>
@@ -200,35 +198,35 @@
   <div class="container">
     <div class="how-grid">
       <div>
-        <div class="section-label">Process</div>
-        <h2 class="section-heading" style="margin-bottom:32px;">From field photo to engineering report</h2>
+        <div class="section-label" data-i18n="how.label">Process</div>
+        <h2 class="section-heading" style="margin-bottom:32px;" data-i18n="how.heading">From field photo to engineering report</h2>
         <div class="steps-list">
           <div class="step-item">
             <div class="step-num">01</div>
             <div class="step-content">
-              <h4>Upload the site photograph</h4>
-              <p>Drag and drop or click to upload any photo of a concrete surface. JPEG, PNG, and WebP supported up to 10 MB.</p>
+              <h4 data-i18n="how.step1.title">Upload the site photograph</h4>
+              <p data-i18n="how.step1.desc">Drag and drop or click to upload any photo of a concrete surface. JPEG, PNG, and WebP supported up to 10 MB.</p>
             </div>
           </div>
           <div class="step-item">
             <div class="step-num">02</div>
             <div class="step-content">
-              <h4>Complete the site questionnaire</h4>
-              <p>Answer 7 quick questions — element type, age, exposure conditions, water infiltration, prior repairs. Context significantly improves accuracy.</p>
+              <h4 data-i18n="how.step2.title">Complete the site questionnaire</h4>
+              <p data-i18n="how.step2.desc">Answer 7 quick questions — element type, age, exposure conditions, water infiltration, prior repairs. Context significantly improves accuracy.</p>
             </div>
           </div>
           <div class="step-item">
             <div class="step-num">03</div>
             <div class="step-content">
-              <h4>AI produces the engineering report</h4>
-              <p>Our AI analyzes the image and questionnaire together, producing a structured 8-section pathology report with defect classification, root cause analysis, and repair strategy.</p>
+              <h4 data-i18n="how.step3.title">AI produces the engineering report</h4>
+              <p data-i18n="how.step3.desc">Our AI analyzes the image and questionnaire together, producing a structured 8-section pathology report with defect classification, root cause analysis, and repair strategy.</p>
             </div>
           </div>
           <div class="step-item">
             <div class="step-num">04</div>
             <div class="step-content">
-              <h4>AI paints the color-coded defect map</h4>
-              <p>The original photo is processed by our vision engine, which traces every crack and fills every spalled zone with precise color-coded overlays — classified by measured width.</p>
+              <h4 data-i18n="how.step4.title">AI paints the color-coded defect map</h4>
+              <p data-i18n="how.step4.desc">The original photo is processed by our vision engine, which traces every crack and fills every spalled zone with precise color-coded overlays — classified by measured width.</p>
             </div>
           </div>
         </div>
@@ -282,53 +280,53 @@
 <section class="section" id="classification">
   <div class="container">
     <div class="section-intro">
-      <div class="section-label">Defect Classification</div>
-      <h2 class="section-heading">Color-coded by crack width</h2>
-      <p style="margin-top:12px;color:var(--muted);font-size:15px;">Every crack is visually classified by its measured width. The overlay uses four distinct colors so severity is instantly readable on-site.</p>
+      <div class="section-label" data-i18n="cl.label">Defect Classification</div>
+      <h2 class="section-heading" data-i18n="cl.heading">Color-coded by crack width</h2>
+      <p style="margin-top:12px;color:var(--muted);font-size:15px;" data-i18n="cl.desc">Every crack is visually classified by its measured width. The overlay uses four distinct colors so severity is instantly readable on-site.</p>
     </div>
 
     <div class="classification-table">
       <div class="class-row class-row-header">
-        <span>COLOR</span>
-        <span>CATEGORY</span>
-        <span>WIDTH THRESHOLD</span>
-        <span>TYPICAL CAUSE</span>
+        <span data-i18n="cl.color">COLOR</span>
+        <span data-i18n="cl.cat">CATEGORY</span>
+        <span data-i18n="cl.width">WIDTH THRESHOLD</span>
+        <span data-i18n="cl.cause">TYPICAL CAUSE</span>
       </div>
       <div class="class-row">
         <div class="class-color-cell">
           <div class="class-swatch" style="background:#00E5FF;box-shadow:0 0 10px rgba(0,229,255,0.5);"></div>
           <span class="class-color-name">Cyan</span>
         </div>
-        <span class="class-category">Hairline / Fine</span>
+        <span class="class-category" data-i18n="cl.hair">Hairline / Fine</span>
         <span class="class-width">&lt; 0.5 mm</span>
-        <span class="class-cause">Shrinkage, thermal movement, early-age stress</span>
+        <span class="class-cause" data-i18n="cl.cause1">Shrinkage, thermal movement, early-age stress</span>
       </div>
       <div class="class-row">
         <div class="class-color-cell">
           <div class="class-swatch" style="background:#FFE000;box-shadow:0 0 10px rgba(255,224,0,0.45);"></div>
           <span class="class-color-name">Yellow</span>
         </div>
-        <span class="class-category">Medium crack</span>
+        <span class="class-category" data-i18n="cl.med">Medium crack</span>
         <span class="class-width">0.5 – 2 mm</span>
-        <span class="class-cause">Structural loading, ASR, carbonation-induced</span>
+        <span class="class-cause" data-i18n="cl.cause2">Structural loading, ASR, carbonation-induced</span>
       </div>
       <div class="class-row">
         <div class="class-color-cell">
           <div class="class-swatch" style="background:#FF6200;box-shadow:0 0 10px rgba(255,98,0,0.5);"></div>
           <span class="class-color-name">Orange</span>
         </div>
-        <span class="class-category">Wide crack</span>
+        <span class="class-category" data-i18n="cl.wide">Wide crack</span>
         <span class="class-width">&gt; 2 mm</span>
-        <span class="class-cause">Advanced structural distress, rebar corrosion, overload</span>
+        <span class="class-cause" data-i18n="cl.cause3">Advanced structural distress, rebar corrosion, overload</span>
       </div>
       <div class="class-row">
         <div class="class-color-cell">
           <div class="class-swatch class-swatch-fill" style="background:#FF00AA;box-shadow:0 0 10px rgba(255,0,170,0.5);"></div>
           <span class="class-color-name">Magenta</span>
         </div>
-        <span class="class-category">Spalling / Void</span>
+        <span class="class-category" data-i18n="cl.spal">Spalling / Void</span>
         <span class="class-width">Open zone</span>
-        <span class="class-cause">Delamination, freeze-thaw damage, rebar corrosion pressure</span>
+        <span class="class-cause" data-i18n="cl.cause4">Delamination, freeze-thaw damage, rebar corrosion pressure</span>
       </div>
     </div>
 
@@ -338,7 +336,7 @@
         <path d="M7 5 V7.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
         <circle cx="7" cy="9.5" r="0.6" fill="currentColor"/>
       </svg>
-      Width classification is performed visually by our AI engine. All results must be verified on-site by a licensed structural engineer. This tool does not replace professional inspection.
+      <span data-i18n="cl.note">Width classification is performed visually by our AI engine. All results must be verified on-site by a licensed structural engineer. This tool does not replace professional inspection.</span>
     </div>
   </div>
 </section>
@@ -347,8 +345,8 @@
 <section class="section section-alt">
   <div class="container">
     <div class="section-intro">
-      <div class="section-label">Trusted by professionals</div>
-      <h2 class="section-heading">What field engineers say</h2>
+      <div class="section-label" data-i18n="trust.label">Trusted by professionals</div>
+      <h2 class="section-heading" data-i18n="trust.heading">What field engineers say</h2>
     </div>
     <div class="trust-grid">
       <div class="trust-card">
@@ -392,9 +390,9 @@
 <section class="section" id="analyzer">
   <div class="container">
     <div class="section-intro">
-      <div class="section-label">Live Analysis</div>
-      <h2 class="section-heading">Inspect a concrete surface now</h2>
-      <p style="margin-top:12px;color:var(--muted);font-size:15px;">Upload any photo of a concrete surface, complete the site questionnaire, and receive a structured pathology report and color-coded defect map in under a minute.</p>
+      <div class="section-label" data-i18n="az.label">Live Analysis</div>
+      <h2 class="section-heading" data-i18n="az.heading">Inspect a concrete surface now</h2>
+      <p style="margin-top:12px;color:var(--muted);font-size:15px;" data-i18n="az.desc">Upload any photo of a concrete surface, complete the site questionnaire, and receive a structured pathology report and color-coded defect map in under a minute.</p>
     </div>
 
     <!-- Gate: shown when not logged in -->
@@ -407,13 +405,13 @@
             <circle cx="12" cy="16" r="1.5" fill="currentColor"/>
           </svg>
         </div>
-        <h3 class="gate-title">Sign in to run an analysis</h3>
-        <p class="gate-desc">Create a free account and get <strong>3 analyses included</strong> — no credit card required.</p>
-        <a href="/login" class="btn btn-primary btn-large">Sign In / Create Account</a>
+        <h3 class="gate-title" data-i18n="gate.title">Sign in to run an analysis</h3>
+        <p class="gate-desc" data-i18n-html="gate.desc">Create a free account and get <strong>3 analyses included</strong> — no credit card required.</p>
+        <a href="/login" class="btn btn-primary btn-large" data-i18n="gate.btn">Sign In / Create Account</a>
         <div class="gate-features">
-          <span>✓ Color-coded defect map</span>
-          <span>✓ 8-section engineering report</span>
-          <span>✓ PDF export</span>
+          <span data-i18n="gate.f1">✓ Color-coded defect map</span>
+          <span data-i18n="gate.f2">✓ 8-section engineering report</span>
+          <span data-i18n="gate.f3">✓ PDF export</span>
         </div>
       </div>
     </div>
@@ -430,8 +428,8 @@
               <path d="M3 16 C3 18 4 19 6 19 H16 C18 19 19 18 19 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
             </svg>
           </div>
-          <div class="upload-dropzone-label">Click to upload or drag and drop</div>
-          <div class="upload-dropzone-hint">JPEG, PNG, WebP &mdash; Max 10 MB</div>
+          <div class="upload-dropzone-label" data-i18n="app.upload.lbl">Click to upload or drag and drop</div>
+          <div class="upload-dropzone-hint" data-i18n="app.upload.hint">JPEG, PNG, WebP &mdash; Max 10 MB</div>
         </label>
         <input type="file" id="photo-input" name="image" class="hidden-file-input" accept="image/jpeg,image/png,image/webp">
 
@@ -447,14 +445,14 @@
               </svg>
             </div>
             <div>
-              <div class="questionnaire-title">Site Context Questionnaire</div>
-              <div class="questionnaire-desc">Context significantly improves report accuracy — takes 30 seconds.</div>
+              <div class="questionnaire-title" data-i18n="app.q.title">Site Context Questionnaire</div>
+              <div class="questionnaire-desc" data-i18n="app.q.desc">Context significantly improves report accuracy — takes 30 seconds.</div>
             </div>
           </div>
           <div class="question-grid">
 
             <div class="question-field">
-              <label for="element-type">Element Type</label>
+              <label for="element-type" data-i18n="app.q.element">Element Type</label>
               <select id="element-type" name="element_type">
                 <option value="">Select element…</option>
                 <option>Column</option>
@@ -471,12 +469,12 @@
             </div>
 
             <div class="question-field">
-              <label for="structure-age">Approximate Age</label>
-              <input type="text" id="structure-age" name="structure_age" placeholder="e.g. 25 years">
+              <label for="structure-age" data-i18n="app.q.age">Approximate Age</label>
+              <input type="text" id="structure-age" name="structure_age" data-i18n-ph="app.q.age.ph" placeholder="e.g. 25 years">
             </div>
 
             <div class="question-field">
-              <label for="exposure">Exposure Conditions</label>
+              <label for="exposure" data-i18n="app.q.exposure">Exposure Conditions</label>
               <select id="exposure" name="exposure">
                 <option value="">Select exposure…</option>
                 <option>Indoor dry</option>
@@ -489,7 +487,7 @@
             </div>
 
             <div class="question-field">
-              <label for="water-infiltration">Water Infiltration Visible?</label>
+              <label for="water-infiltration" data-i18n="app.q.water">Water Infiltration Visible?</label>
               <select id="water-infiltration" name="water_infiltration">
                 <option value="">Select…</option>
                 <option>Yes</option>
@@ -499,7 +497,7 @@
             </div>
 
             <div class="question-field">
-              <label for="crack-evolution">Is the Defect Evolving?</label>
+              <label for="crack-evolution" data-i18n="app.q.evolving">Is the Defect Evolving?</label>
               <select id="crack-evolution" name="crack_evolution">
                 <option value="">Select…</option>
                 <option>Yes</option>
@@ -509,7 +507,7 @@
             </div>
 
             <div class="question-field">
-              <label for="previous-repair">Previous Repair Attempted?</label>
+              <label for="previous-repair" data-i18n="app.q.repair">Previous Repair Attempted?</label>
               <select id="previous-repair" name="previous_repair">
                 <option value="">Select…</option>
                 <option>Yes</option>
@@ -520,15 +518,16 @@
 
           </div>
           <div class="question-field full" style="margin-top:14px;">
-            <label for="customer-notes">Inspector Notes</label>
+            <label for="customer-notes" data-i18n="app.q.notes">Inspector Notes</label>
             <textarea id="customer-notes" name="customer_notes" rows="3"
+              data-i18n-ph="app.q.notes.ph"
               placeholder="Observations: when it appeared, falling pieces, rust stains, leaks, load history, vibrations, previous investigations…"></textarea>
           </div>
         </div>
 
         <!-- Submit -->
         <div class="submit-row">
-          <button type="submit" id="submit-btn" class="btn btn-primary btn-large analyze-btn">Generate Report &amp; Defect Map</button>
+          <button type="submit" id="submit-btn" class="btn btn-primary btn-large analyze-btn" data-i18n="app.submit">Generate Report &amp; Defect Map</button>
         </div>
 
         <!-- Status message -->
@@ -538,15 +537,15 @@
         <div id="progress-steps" class="progress-steps">
           <div class="step-node" id="step-analyze">
             <div class="step-circle">1</div>
-            <div class="step-label">Analyzing image</div>
+            <div class="step-label" data-i18n="app.step1">Analyzing image</div>
           </div>
           <div class="step-node" id="step-annotate">
             <div class="step-circle">2</div>
-            <div class="step-label">Mapping defects</div>
+            <div class="step-label" data-i18n="app.step2">Mapping defects</div>
           </div>
           <div class="step-node" id="step-done">
             <div class="step-circle">✓</div>
-            <div class="step-label">Report ready</div>
+            <div class="step-label" data-i18n="app.step3">Report ready</div>
           </div>
         </div>
 
@@ -559,19 +558,19 @@
         <div class="image-column">
           <div class="image-card">
             <div class="image-card-label">
-              <span>UPLOADED PHOTO</span>
+              <span data-i18n="app.photo.lbl">UPLOADED PHOTO</span>
             </div>
             <div id="img-preview" class="image-preview-box"></div>
           </div>
 
           <div id="annot-card" class="image-card" style="display:none;">
             <div class="image-card-label">
-              <span>AI DEFECT MAP</span>
+              <span data-i18n="app.map.lbl">AI DEFECT MAP</span>
               <span id="annot-badge" class="annot-badge"></span>
             </div>
             <div id="annot-image-box"></div>
             <div id="distress-table" class="distress-table" style="display:none;"></div>
-            <p class="annot-note">AI-generated overlay. Must be verified on-site by a licensed structural engineer.</p>
+            <p class="annot-note" data-i18n="app.annot.note">AI-generated overlay. Must be verified on-site by a licensed structural engineer.</p>
           </div>
         </div>
 
@@ -579,8 +578,8 @@
         <div class="report-column">
           <div class="report-card">
             <div class="report-toolbar">
-              <span class="report-toolbar-label">AI Assessment Report</span>
-              <button id="download-pdf-btn" class="btn btn-success" style="padding:8px 16px;font-size:12px;" disabled>
+              <span class="report-toolbar-label" data-i18n="app.report.lbl">AI Assessment Report</span>
+              <button id="download-pdf-btn" class="btn btn-success" style="padding:8px 16px;font-size:12px;" disabled data-i18n="app.pdf">
                 ⬇ Download PDF
               </button>
             </div>
@@ -599,13 +598,13 @@
   <div class="container">
     <div class="cta-inner">
       <div>
-        <div class="section-label">Start inspecting</div>
-        <h2 class="section-heading">Accelerate your field assessments</h2>
-        <p style="color:var(--muted);margin-top:10px;font-size:15px;max-width:500px;">Upload a photo and get a structured pathology report in under 60 seconds.</p>
+        <div class="section-label" data-i18n="cta.label">Start inspecting</div>
+        <h2 class="section-heading" data-i18n="cta.heading">Accelerate your field assessments</h2>
+        <p style="color:var(--muted);margin-top:10px;font-size:15px;max-width:500px;" data-i18n="cta.desc">Upload a photo and get a structured pathology report in under 60 seconds.</p>
       </div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <a href="/login" class="btn btn-primary btn-large">Start Free Analysis</a>
-        <a href="mailto:contact@example.com" class="btn btn-ghost btn-large">Contact us</a>
+        <a href="/login" class="btn btn-primary btn-large" data-i18n="cta.btn1">Start Free Analysis</a>
+        <a href="mailto:contact@concretedefectai.com" class="btn btn-ghost btn-large" data-i18n="cta.btn2">Contact us</a>
       </div>
     </div>
   </div>
@@ -628,72 +627,33 @@
         <p>AI-powered concrete pathology analysis for structural engineers, inspectors, and infrastructure owners.</p>
       </div>
       <div class="footer-col">
-        <h5>Product</h5>
-        <a href="#features">Features</a>
-        <a href="#how-it-works">How it works</a>
-        <a href="#classification">Crack classification</a>
+        <h5 data-i18n="foot.product">Product</h5>
+        <a href="#features" data-i18n="nav.features">Features</a>
+        <a href="#how-it-works" data-i18n="nav.how">How it works</a>
+        <a href="#classification" data-i18n="nav.classif">Classification</a>
         <a href="/api/docs">API Docs</a>
       </div>
       <div class="footer-col">
-        <h5>Methodology</h5>
-        <a href="#classification">Crack classification</a>
-        <a href="#how-it-works">How it works</a>
-        <a href="#features">Features</a>
+        <h5 data-i18n="foot.method">Methodology</h5>
+        <a href="#classification" data-i18n="nav.classif">Classification</a>
+        <a href="#how-it-works" data-i18n="nav.how">How it works</a>
+        <a href="#features" data-i18n="nav.features">Features</a>
       </div>
       <div class="footer-col">
-        <h5>Company</h5>
-        <a href="mailto:contact@concretedefectai.com">Contact</a>
-        <a href="/privacy">Privacy Policy</a>
-        <a href="/terms">Terms of Service</a>
+        <h5 data-i18n="foot.company">Company</h5>
+        <a href="mailto:contact@concretedefectai.com" data-i18n="foot.contact">Contact</a>
+        <a href="/privacy" data-i18n="foot.privacy">Privacy Policy</a>
+        <a href="/terms" data-i18n="foot.terms">Terms of Service</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2025 {{ app_name }}. All rights reserved.</p>
-      <span class="footer-tag">AI-assisted &middot; Not a stamped engineering report</span>
+      <p data-i18n="foot.copy">&copy; 2026 {{ app_name }}. All rights reserved.</p>
+      <span class="footer-tag" data-i18n="foot.tag">AI-assisted &middot; Not a stamped engineering report</span>
     </div>
   </div>
 </footer>
 
-<!-- ══ AUTH MODAL ════════════════════════════════════════════ -->
-<div id="auth-overlay" class="auth-overlay" style="display:none;">
-  <div class="auth-modal">
-    <div class="auth-logo">
-      <div class="brand-icon" style="width:38px;height:38px;font-size:14px;">
-        <svg width="18" height="18" viewBox="0 0 14 14" fill="none">
-          <path d="M2 7 L5 4 L7 6 L9 3 L12 7" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M1 10 L4 10 L4 12 L10 12 L10 10 L13 10" stroke="white" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
-        </svg>
-      </div>
-      <span class="auth-brand-name">{{ app_name }}</span>
-    </div>
-
-    <div class="auth-tabs">
-      <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
-      <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Create Account</button>
-    </div>
-
-    <div id="auth-error" class="auth-error"></div>
-
-    <form id="auth-form" autocomplete="off">
-      <div class="auth-field">
-        <label>Email address</label>
-        <input type="email" id="auth-email" placeholder="you@example.com" required autocomplete="email">
-      </div>
-      <div class="auth-field">
-        <label>Password</label>
-        <input type="password" id="auth-password" placeholder="Min. 6 characters" required autocomplete="current-password">
-      </div>
-      <button type="submit" id="auth-submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:6px;">
-        Sign In
-      </button>
-    </form>
-
-    <p class="auth-footer-note" id="auth-footer-note">
-      New here? <a href="#" onclick="switchTab('register');return false;">Create a free account</a> — includes 3 free analyses.
-    </p>
-  </div>
-</div>
-
+<script src="/static/js/i18n.js"></script>
 <script src="/static/js/app.js"></script>
 </body>
 </html>

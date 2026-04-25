@@ -38,13 +38,22 @@
       </div>
       {{ app_name }}
     </a>
-    <a href="/" class="btn btn-ghost" style="padding:8px 18px;font-size:13.5px;">← Back to home</a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en" onclick="i18n.set('en')">EN</button>
+        <button class="lang-btn" data-lang="fr" onclick="i18n.set('fr')">FR</button>
+      </div>
+      <a href="/" class="btn btn-ghost" style="padding:8px 18px;font-size:13.5px;" data-i18n="nav.back">← Back to home</a>
+    </div>
   </div>
 </header>
 
 <div class="container">
   <div class="legal-page">
 
+    <div class="l-fr" style="background:rgba(255,122,53,.08);border:1px solid rgba(255,122,53,.2);border-radius:10px;padding:14px 18px;margin-bottom:28px;font-size:13.5px;color:var(--muted);line-height:1.6;">
+      <strong style="color:var(--accent-2);">Notice :</strong> Cette page est disponible en français ci-dessous. La version anglaise fait foi en cas de divergence.
+    </div>
     <div class="legal-eyebrow">Legal</div>
     <h1 class="legal-title">Privacy Policy</h1>
     <p class="legal-meta">
@@ -228,5 +237,6 @@
   </div>
 </footer>
 
+<script src="/static/js/i18n.js"></script>
 </body>
 </html>

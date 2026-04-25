@@ -65,13 +65,17 @@
         {{ app_name }}
       </a>
       <span class="app-nav-divider"></span>
-      <span class="app-nav-title">Analysis Tool</span>
+      <span class="app-nav-title" data-i18n="app.tool">Analysis Tool</span>
     </div>
     <div class="app-nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en" onclick="i18n.set('en')">EN</button>
+        <button class="lang-btn" data-lang="fr" onclick="i18n.set('fr')">FR</button>
+      </div>
       <span class="app-tries-badge" id="app-tries-badge"></span>
       <span class="app-nav-email" id="app-nav-email"></span>
-      <button class="btn btn-ghost" onclick="appLogout()" style="padding:7px 14px;font-size:13px;">Sign Out</button>
-      <button class="btn btn-ghost" onclick="deleteAccount()" style="padding:7px 14px;font-size:13px;color:var(--danger);border-color:rgba(240,80,80,.25);">Delete Account</button>
+      <button class="btn btn-ghost" onclick="appLogout()" style="padding:7px 14px;font-size:13px;" data-i18n="app.signout">Sign Out</button>
+      <button class="btn btn-ghost" onclick="deleteAccount()" style="padding:7px 14px;font-size:13px;color:var(--danger);border-color:rgba(240,80,80,.25);" data-i18n="app.delete">Delete Account</button>
     </div>
   </div>
 </header>
@@ -81,8 +85,8 @@
   <div class="container">
 
     <div class="app-page-header">
-      <h1>Concrete Defect Analysis</h1>
-      <p>Upload a site photo, fill in the site context, and receive your report in under 60 seconds.</p>
+      <h1 data-i18n="app.heading">Concrete Defect Analysis</h1>
+      <p data-i18n="app.sub">Upload a site photo, fill in the site context, and receive your report in under 60 seconds.</p>
     </div>
 
     <div class="analyzer-shell" id="analyzer-shell">
@@ -97,8 +101,8 @@
               <path d="M3 16 C3 18 4 19 6 19 H16 C18 19 19 18 19 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
             </svg>
           </div>
-          <div class="upload-dropzone-label">Click to upload or drag and drop</div>
-          <div class="upload-dropzone-hint">JPEG, PNG, WebP — Max 10 MB</div>
+          <div class="upload-dropzone-label" data-i18n="app.upload.lbl">Click to upload or drag and drop</div>
+          <div class="upload-dropzone-hint" data-i18n="app.upload.hint">JPEG, PNG, WebP — Max 10 MB</div>
         </label>
         <input type="file" id="photo-input" name="image" class="hidden-file-input" accept="image/jpeg,image/png,image/webp">
 
@@ -114,14 +118,14 @@
               </svg>
             </div>
             <div>
-              <div class="questionnaire-title">Site Context Questionnaire</div>
-              <div class="questionnaire-desc">Context significantly improves report accuracy — takes 30 seconds.</div>
+              <div class="questionnaire-title" data-i18n="app.q.title">Site Context Questionnaire</div>
+              <div class="questionnaire-desc" data-i18n="app.q.desc">Context significantly improves report accuracy — takes 30 seconds.</div>
             </div>
           </div>
           <div class="question-grid">
 
             <div class="question-field">
-              <label for="element-type">Element Type</label>
+              <label for="element-type" data-i18n="app.q.element">Element Type</label>
               <select id="element-type" name="element_type">
                 <option value="">Select element…</option>
                 <option>Column</option><option>Beam</option><option>Slab</option>
@@ -132,12 +136,12 @@
             </div>
 
             <div class="question-field">
-              <label for="structure-age">Approximate Age</label>
-              <input type="text" id="structure-age" name="structure_age" placeholder="e.g. 25 years">
+              <label for="structure-age" data-i18n="app.q.age">Approximate Age</label>
+              <input type="text" id="structure-age" name="structure_age" data-i18n-ph="app.q.age.ph" placeholder="e.g. 25 years">
             </div>
 
             <div class="question-field">
-              <label for="exposure">Exposure Conditions</label>
+              <label for="exposure" data-i18n="app.q.exposure">Exposure Conditions</label>
               <select id="exposure" name="exposure">
                 <option value="">Select exposure…</option>
                 <option>Indoor dry</option>
@@ -150,7 +154,7 @@
             </div>
 
             <div class="question-field">
-              <label for="water-infiltration">Water Infiltration Visible?</label>
+              <label for="water-infiltration" data-i18n="app.q.water">Water Infiltration Visible?</label>
               <select id="water-infiltration" name="water_infiltration">
                 <option value="">Select…</option>
                 <option>Yes</option><option>No</option><option>Unknown</option>
@@ -158,7 +162,7 @@
             </div>
 
             <div class="question-field">
-              <label for="crack-evolution">Is the Defect Evolving?</label>
+              <label for="crack-evolution" data-i18n="app.q.evolving">Is the Defect Evolving?</label>
               <select id="crack-evolution" name="crack_evolution">
                 <option value="">Select…</option>
                 <option>Yes</option><option>No</option><option>Unknown</option>
@@ -166,7 +170,7 @@
             </div>
 
             <div class="question-field">
-              <label for="previous-repair">Previous Repair Attempted?</label>
+              <label for="previous-repair" data-i18n="app.q.repair">Previous Repair Attempted?</label>
               <select id="previous-repair" name="previous_repair">
                 <option value="">Select…</option>
                 <option>Yes</option><option>No</option><option>Unknown</option>
@@ -175,15 +179,16 @@
 
           </div>
           <div class="question-field full" style="margin-top:14px;">
-            <label for="customer-notes">Inspector Notes</label>
+            <label for="customer-notes" data-i18n="app.q.notes">Inspector Notes</label>
             <textarea id="customer-notes" name="customer_notes" rows="3"
+              data-i18n-ph="app.q.notes.ph"
               placeholder="Observations: when it appeared, falling pieces, rust stains, leaks, load history, vibrations, previous investigations…"></textarea>
           </div>
         </div>
 
         <!-- Submit -->
         <div class="submit-row">
-          <button type="submit" id="submit-btn" class="btn btn-primary btn-large analyze-btn">Generate Report &amp; Defect Map</button>
+          <button type="submit" id="submit-btn" class="btn btn-primary btn-large analyze-btn" data-i18n="app.submit">Generate Report &amp; Defect Map</button>
         </div>
 
         <!-- Status -->
@@ -193,15 +198,15 @@
         <div id="progress-steps" class="progress-steps">
           <div class="step-node" id="step-analyze">
             <div class="step-circle">1</div>
-            <div class="step-label">Analyzing image</div>
+            <div class="step-label" data-i18n="app.step1">Analyzing image</div>
           </div>
           <div class="step-node" id="step-annotate">
             <div class="step-circle">2</div>
-            <div class="step-label">Mapping defects</div>
+            <div class="step-label" data-i18n="app.step2">Mapping defects</div>
           </div>
           <div class="step-node" id="step-done">
             <div class="step-circle">✓</div>
-            <div class="step-label">Report ready</div>
+            <div class="step-label" data-i18n="app.step3">Report ready</div>
           </div>
         </div>
 
@@ -212,25 +217,25 @@
 
         <div class="image-column">
           <div class="image-card">
-            <div class="image-card-label"><span>UPLOADED PHOTO</span></div>
+            <div class="image-card-label"><span data-i18n="app.photo.lbl">UPLOADED PHOTO</span></div>
             <div id="img-preview" class="image-preview-box"></div>
           </div>
           <div id="annot-card" class="image-card" style="display:none;">
             <div class="image-card-label">
-              <span>AI DEFECT MAP</span>
+              <span data-i18n="app.map.lbl">AI DEFECT MAP</span>
               <span id="annot-badge" class="annot-badge"></span>
             </div>
             <div id="annot-image-box"></div>
             <div id="distress-table" class="distress-table" style="display:none;"></div>
-            <p class="annot-note">AI-generated overlay. Must be verified on-site by a licensed structural engineer.</p>
+            <p class="annot-note" data-i18n="app.annot.note">AI-generated overlay. Must be verified on-site by a licensed structural engineer.</p>
           </div>
         </div>
 
         <div class="report-column">
           <div class="report-card">
             <div class="report-toolbar">
-              <span class="report-toolbar-label">AI Assessment Report</span>
-              <button id="download-pdf-btn" class="btn btn-success" style="padding:8px 16px;font-size:12px;" disabled>
+              <span class="report-toolbar-label" data-i18n="app.report.lbl">AI Assessment Report</span>
+              <button id="download-pdf-btn" class="btn btn-success" style="padding:8px 16px;font-size:12px;" disabled data-i18n="app.pdf">
                 ⬇ Download PDF
               </button>
             </div>
@@ -244,6 +249,7 @@
   </div>
 </main>
 
+<script src="/static/js/i18n.js"></script>
 <script>
 // ── Auth guard ─────────────────────────────────────────
 (function() {
@@ -256,9 +262,10 @@
   // Populate header
   const badge = document.getElementById("app-tries-badge");
   const lbl   = document.getElementById("app-nav-email");
-  if (lbl)   lbl.textContent   = email || "";
+  if (lbl) lbl.textContent = email || "";
   if (badge) {
-    badge.textContent = tries + (tries === 1 ? " analysis" : " analyses") + " left";
+    const triesLabel = (typeof i18n !== 'undefined') ? i18n.t('app.tries')(tries) : tries + " analyses left";
+    badge.textContent = triesLabel;
     badge.className   = "app-tries-badge" + (tries === 0 ? " tries-empty" : tries === 1 ? " tries-warn" : "");
   }
 
@@ -268,8 +275,10 @@
     .then(data => {
       localStorage.setItem("cda_tries", data.tries_remaining);
       if (badge) {
-        badge.textContent = data.tries_remaining + (data.tries_remaining === 1 ? " analysis" : " analyses") + " left";
-        badge.className   = "app-tries-badge" + (data.tries_remaining === 0 ? " tries-empty" : data.tries_remaining === 1 ? " tries-warn" : "");
+        const n = data.tries_remaining;
+        const triesLabel = (typeof i18n !== 'undefined') ? i18n.t('app.tries')(n) : n + " analyses left";
+        badge.textContent = triesLabel;
+        badge.className   = "app-tries-badge" + (n === 0 ? " tries-empty" : n === 1 ? " tries-warn" : "");
       }
     })
     .catch(() => { localStorage.clear(); window.location.href = "/login"; });

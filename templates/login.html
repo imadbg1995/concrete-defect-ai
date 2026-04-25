@@ -141,7 +141,13 @@
       </div>
       {{ app_name }}
     </a>
-    <a href="/" class="btn btn-ghost" style="padding:8px 18px;font-size:13.5px;">← Back to home</a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en" onclick="i18n.set('en')">EN</button>
+        <button class="lang-btn" data-lang="fr" onclick="i18n.set('fr')">FR</button>
+      </div>
+      <a href="/" class="btn btn-ghost" style="padding:8px 18px;font-size:13.5px;" data-i18n="nav.back">← Back to home</a>
+    </div>
   </div>
 </header>
 
@@ -158,18 +164,18 @@
       </div>
       <span>{{ app_name }}</span>
     </div>
-    <h1 class="login-headline">
-      Professional concrete<br>inspection, powered by <em>AI</em>
+    <h1 class="login-headline" data-i18n-html="login.headline">
+      Professional concrete inspection, powered by <em>AI</em>
     </h1>
-    <p class="login-subline">
+    <p class="login-subline" data-i18n="login.sub">
       Upload a photo and receive a structured 8-section pathology report with a color-coded defect map — in under 60 seconds.
     </p>
     <ul class="login-perks">
-      <li><span class="perk-check">✓</span> 3 free analyses included with every account</li>
-      <li><span class="perk-check">✓</span> Color-coded crack map by severity</li>
-      <li><span class="perk-check">✓</span> Root cause analysis &amp; repair strategy</li>
-      <li><span class="perk-check">✓</span> One-click PDF export</li>
-      <li><span class="perk-check">✓</span> No credit card required</li>
+      <li><span class="perk-check">✓</span> <span data-i18n="login.perk1">3 free analyses included with every account</span></li>
+      <li><span class="perk-check">✓</span> <span data-i18n="login.perk2">Color-coded crack map by severity</span></li>
+      <li><span class="perk-check">✓</span> <span data-i18n="login.perk3">Root cause analysis &amp; repair strategy</span></li>
+      <li><span class="perk-check">✓</span> <span data-i18n="login.perk4">One-click PDF export</span></li>
+      <li><span class="perk-check">✓</span> <span data-i18n="login.perk5">No credit card required</span></li>
     </ul>
   </div>
 
@@ -178,38 +184,38 @@
     <div class="login-form-box">
 
       <div class="auth-tabs">
-        <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
-        <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Create Account</button>
+        <button class="auth-tab active" id="tab-login" onclick="switchTab('login')" data-i18n="login.tab.in">Sign In</button>
+        <button class="auth-tab" id="tab-register" onclick="switchTab('register')" data-i18n="login.tab.reg">Create Account</button>
       </div>
 
       <div id="auth-error" class="auth-error"></div>
 
       <form id="auth-form" autocomplete="off">
         <div class="auth-field">
-          <label>Email address</label>
-          <input type="email" id="auth-email" placeholder="you@example.com" required autocomplete="email">
+          <label data-i18n="login.email">Email address</label>
+          <input type="email" id="auth-email" data-i18n-ph="login.email.ph" placeholder="you@example.com" required autocomplete="email">
         </div>
         <div class="auth-field">
-          <label>Password</label>
-          <input type="password" id="auth-password" placeholder="Min. 6 characters" required autocomplete="current-password">
+          <label data-i18n="login.pass">Password</label>
+          <input type="password" id="auth-password" data-i18n-ph="login.pass.ph" placeholder="Min. 6 characters" required autocomplete="current-password">
         </div>
 
         <!-- Register-only fields -->
         <div id="register-fields" style="display:none;">
           <div class="auth-field">
-            <label>Confirm password</label>
-            <input type="password" id="auth-password2" placeholder="Repeat your password">
+            <label data-i18n="login.pass2">Confirm password</label>
+            <input type="password" id="auth-password2" data-i18n-ph="login.pass2.ph" placeholder="Repeat your password">
           </div>
           <div class="auth-field">
-            <label>Country</label>
+            <label data-i18n="login.country">Country</label>
             <select id="auth-country">
-              <option value="">Select country…</option>
+              <option value="" data-i18n="login.country.ph">Select country…</option>
               <option>Afghanistan</option><option>Albania</option><option>Algeria</option><option>Argentina</option><option>Australia</option><option>Austria</option><option>Bangladesh</option><option>Belgium</option><option>Bolivia</option><option>Brazil</option><option>Canada</option><option>Chile</option><option>China</option><option>Colombia</option><option>Croatia</option><option>Czech Republic</option><option>Denmark</option><option>Ecuador</option><option>Egypt</option><option>Ethiopia</option><option>Finland</option><option>France</option><option>Germany</option><option>Ghana</option><option>Greece</option><option>Hungary</option><option>India</option><option>Indonesia</option><option>Iran</option><option>Iraq</option><option>Ireland</option><option>Israel</option><option>Italy</option><option>Japan</option><option>Jordan</option><option>Kazakhstan</option><option>Kenya</option><option>Kuwait</option><option>Lebanon</option><option>Libya</option><option>Malaysia</option><option>Mali</option><option>Mexico</option><option>Morocco</option><option>Netherlands</option><option>New Zealand</option><option>Nigeria</option><option>Norway</option><option>Oman</option><option>Pakistan</option><option>Peru</option><option>Philippines</option><option>Poland</option><option>Portugal</option><option>Qatar</option><option>Romania</option><option>Russia</option><option>Saudi Arabia</option><option>Senegal</option><option>Serbia</option><option>South Africa</option><option>South Korea</option><option>Spain</option><option>Sri Lanka</option><option>Sudan</option><option>Sweden</option><option>Switzerland</option><option>Syria</option><option>Taiwan</option><option>Thailand</option><option>Tunisia</option><option>Turkey</option><option>Ukraine</option><option>United Arab Emirates</option><option>United Kingdom</option><option>United States</option><option>Venezuela</option><option>Vietnam</option><option>Yemen</option><option>Other</option>
             </select>
           </div>
           <div class="auth-field">
-            <label>Phone number</label>
-            <input type="tel" id="auth-phone" placeholder="+1 555 000 0000">
+            <label data-i18n="login.phone">Phone number</label>
+            <input type="tel" id="auth-phone" data-i18n-ph="login.phone.ph" placeholder="+1 555 000 0000">
           </div>
         </div>
 
@@ -217,36 +223,37 @@
         <div id="gdpr-field" style="display:none;margin-bottom:6px;">
           <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:10px;">
             <input type="checkbox" id="auth-gdpr" style="margin-top:3px;accent-color:var(--accent);width:15px;height:15px;flex-shrink:0;">
-            <span>I have read and agree to the
+            <span data-i18n-html="login.privacy.lbl">I have read and agree to the
               <a href="/privacy" target="_blank" style="color:var(--accent-2);">Privacy Policy</a>
               — including the collection of my email, country, and phone number.
             </span>
           </label>
           <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13.5px;color:var(--muted);line-height:1.6;">
             <input type="checkbox" id="auth-terms" style="margin-top:3px;accent-color:var(--accent);width:15px;height:15px;flex-shrink:0;">
-            <span>I have read and agree to the
+            <span data-i18n-html="login.terms.lbl">I have read and agree to the
               <a href="/terms" target="_blank" style="color:var(--accent-2);">Terms of Service</a>
               — including that AI outputs are not certified engineering documents.
             </span>
           </label>
         </div>
 
-        <button type="submit" id="auth-submit" class="auth-submit-btn">Sign In</button>
+        <button type="submit" id="auth-submit" class="auth-submit-btn" data-i18n="login.btn.in">Sign In</button>
       </form>
 
-      <p class="login-footer-note" id="footer-note">
+      <p class="login-footer-note" id="footer-note" data-i18n-html="login.foot.new">
         New here? <a href="#" onclick="switchTab('register');return false;">Create a free account</a> — includes 3 analyses.
       </p>
 
       <a href="/" class="back-home">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2 L3 7 L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Back to home
+        <span data-i18n="nav.back">← Back to home</span>
       </a>
     </div>
   </div>
 
 </div>
 
+<script src="/static/js/i18n.js"></script>
 <script>
 (function() {
   // If already logged in, go straight to app
@@ -259,13 +266,15 @@
     const isLogin = tab === "login";
     document.getElementById("tab-login").classList.toggle("active", isLogin);
     document.getElementById("tab-register").classList.toggle("active", !isLogin);
-    document.getElementById("auth-submit").textContent = isLogin ? "Sign In" : "Create Account";
+    const lang = (typeof i18n !== 'undefined') ? i18n.get() : 'en';
+    document.getElementById("auth-submit").textContent = isLogin
+      ? i18n.t('login.btn.in') : i18n.t('login.btn.reg');
     document.getElementById("register-fields").style.display = isLogin ? "none" : "block";
     document.getElementById("gdpr-field").style.display = isLogin ? "none" : "block";
     document.getElementById("auth-password2").required = !isLogin;
     document.getElementById("footer-note").innerHTML = isLogin
-      ? 'New here? <a href="#" onclick="switchTab(\'register\');return false;">Create a free account</a> — includes 3 analyses.'
-      : 'Already have an account? <a href="#" onclick="switchTab(\'login\');return false;">Sign in</a>';
+      ? i18n.t('login.foot.new')
+      : i18n.t('login.foot.have');
     document.getElementById("auth-error").style.display = "none";
   };
 
@@ -328,7 +337,7 @@
       errEl.textContent   = err.message;
       errEl.style.display = "block";
       btn.disabled = false;
-      btn.textContent = isLogin ? "Sign In" : "Create Account";
+      btn.textContent = isLogin ? i18n.t('login.btn.in') : i18n.t('login.btn.reg');
     }
   });
 })();
