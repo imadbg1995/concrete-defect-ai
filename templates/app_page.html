@@ -43,22 +43,19 @@
     /* ── User menu dropdown ── */
     .user-menu-wrap { position: relative; }
     .user-menu-btn {
-      display: flex; align-items: center; gap: 8px;
-      padding: 6px 12px; border-radius: var(--r-sm);
-      background: transparent; border: 1px solid var(--border-2);
-      cursor: pointer; font-size: 13px; color: var(--muted);
-      transition: border-color .15s, background .15s;
+      display: flex; align-items: center;
+      padding: 0; border-radius: 50%;
+      background: transparent; border: none;
+      cursor: pointer;
+      transition: opacity .15s, box-shadow .15s;
     }
-    .user-menu-btn:hover, .user-menu-btn.open { border-color: var(--accent-2); background: rgba(255,122,53,.06); }
+    .user-menu-btn:hover, .user-menu-btn.open { opacity: .85; box-shadow: 0 0 0 3px rgba(255,122,53,.35); }
     .user-menu-avatar {
-      width: 26px; height: 26px; border-radius: 50%;
+      width: 34px; height: 34px; border-radius: 50%;
       background: var(--accent-2); display: flex; align-items: center;
-      justify-content: center; font-size: 11px; font-weight: 700; color: #fff;
-      flex-shrink: 0;
+      justify-content: center; font-size: 13px; font-weight: 700; color: #fff;
+      flex-shrink: 0; user-select: none;
     }
-    .user-menu-label { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .user-menu-caret { transition: transform .2s; flex-shrink: 0; }
-    .user-menu-btn.open .user-menu-caret { transform: rotate(180deg); }
 
     .user-dropdown {
       position: absolute; top: calc(100% + 8px); right: 0;
@@ -138,10 +135,6 @@
       <div class="user-menu-wrap" id="user-menu-wrap">
         <button class="user-menu-btn" id="user-menu-btn" onclick="toggleUserMenu(event)">
           <div class="user-menu-avatar" id="user-avatar">?</div>
-          <span class="user-menu-label" id="app-nav-label"></span>
-          <svg class="user-menu-caret" width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M2 4 L6 8 L10 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
         </button>
         <div class="user-dropdown" id="user-dropdown">
           <div class="user-dropdown-header">
