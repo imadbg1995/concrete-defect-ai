@@ -165,6 +165,19 @@
       'app.report.lbl':    'AI Assessment Report',
       'app.annot.note':    'AI-generated overlay. Must be verified on-site by a licensed structural engineer.',
       'app.tries':         (n) => n + (n === 1 ? ' analysis' : ' analyses') + ' left',
+
+      /* Account settings */
+      'app.acct.name':         'Change Name',
+      'app.acct.email':        'Change Email',
+      'app.acct.password':     'Change Password',
+      'app.acct.name.label':   'Display Name',
+      'app.acct.newEmail':     'New Email Address',
+      'app.acct.confirmPass':  'Current Password',
+      'app.acct.currentPass':  'Current Password',
+      'app.acct.newPass':      'New Password',
+      'app.cancel':            'Cancel',
+      'app.save':              'Save Changes',
+      'app.acct.settings':     'Account Settings',
     },
 
     fr: {
@@ -331,6 +344,19 @@
       'app.report.lbl':    'Rapport d\'évaluation IA',
       'app.annot.note':    'Calque généré par IA. Doit être vérifié sur site par un ingénieur structurel agréé.',
       'app.tries':         (n) => n + (n <= 1 ? ' analyse restante' : ' analyses restantes'),
+
+      /* Account settings */
+      'app.acct.name':         'Changer le nom',
+      'app.acct.email':        'Changer le courriel',
+      'app.acct.password':     'Changer le mot de passe',
+      'app.acct.name.label':   'Nom d\'affichage',
+      'app.acct.newEmail':     'Nouvelle adresse courriel',
+      'app.acct.confirmPass':  'Mot de passe actuel',
+      'app.acct.currentPass':  'Mot de passe actuel',
+      'app.acct.newPass':      'Nouveau mot de passe',
+      'app.cancel':            'Annuler',
+      'app.save':              'Enregistrer',
+      'app.acct.settings':     'Paramètres du compte',
     }
   };
 

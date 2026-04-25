@@ -40,6 +40,69 @@
     .app-tries-badge.tries-warn  { background: rgba(245,183,49,.1);  color: var(--warning); border-color: rgba(245,183,49,.2); }
     .app-tries-badge.tries-empty { background: rgba(240,80,80,.1);   color: var(--danger);  border-color: rgba(240,80,80,.2); }
 
+    /* ── User menu dropdown ── */
+    .user-menu-wrap { position: relative; }
+    .user-menu-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 12px; border-radius: var(--r-sm);
+      background: transparent; border: 1px solid var(--border-2);
+      cursor: pointer; font-size: 13px; color: var(--muted);
+      transition: border-color .15s, background .15s;
+    }
+    .user-menu-btn:hover, .user-menu-btn.open { border-color: var(--accent-2); background: rgba(255,122,53,.06); }
+    .user-menu-avatar {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--accent-2); display: flex; align-items: center;
+      justify-content: center; font-size: 11px; font-weight: 700; color: #fff;
+      flex-shrink: 0;
+    }
+    .user-menu-label { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .user-menu-caret { transition: transform .2s; flex-shrink: 0; }
+    .user-menu-btn.open .user-menu-caret { transform: rotate(180deg); }
+
+    .user-dropdown {
+      position: absolute; top: calc(100% + 8px); right: 0;
+      min-width: 220px; background: var(--card); border: 1px solid var(--border-2);
+      border-radius: var(--r-md); box-shadow: 0 12px 40px rgba(0,0,0,.5);
+      z-index: 200; display: none; overflow: hidden;
+    }
+    .user-dropdown.open { display: block; animation: dropFadeIn .15s ease; }
+    @keyframes dropFadeIn { from { opacity:0; transform: translateY(-6px); } to { opacity:1; transform: translateY(0); } }
+    .user-dropdown-header { padding: 12px 16px 10px; border-bottom: 1px solid var(--border); }
+    .user-dropdown-name { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.4; }
+    .user-dropdown-email { font-size: 11.5px; color: var(--soft); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; }
+    .user-dropdown-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px; font-size: 13.5px; color: var(--muted);
+      cursor: pointer; transition: background .12s, color .12s;
+      border: none; background: none; width: 100%; text-align: left;
+    }
+    .user-dropdown-item:hover { background: rgba(255,255,255,.04); color: var(--text); }
+    .user-dropdown-item.danger { color: var(--danger); }
+    .user-dropdown-item.danger:hover { background: rgba(240,80,80,.07); }
+    .user-dropdown-sep { height: 1px; background: var(--border); margin: 4px 0; }
+
+    /* ── Account modals ── */
+    .acct-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.65);
+      backdrop-filter: blur(4px); z-index: 500;
+      display: flex; align-items: center; justify-content: center;
+      animation: fadeIn .15s ease;
+    }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    .acct-modal {
+      background: var(--card); border: 1px solid var(--border-2);
+      border-radius: var(--r-lg); padding: 28px 28px 24px;
+      width: 100%; max-width: 400px; margin: 16px;
+      box-shadow: 0 24px 60px rgba(0,0,0,.55);
+    }
+    .acct-modal-title { font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 20px; }
+    .acct-modal-field { margin-bottom: 14px; }
+    .acct-modal-field label { font-size: 11.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; display: block; margin-bottom: 6px; }
+    .acct-modal-field input { width: 100%; box-sizing: border-box; }
+    .acct-modal-err { font-size: 13px; color: var(--danger); margin-top: 10px; min-height: 18px; }
+    .acct-modal-actions { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
+
     /* ── Main layout ── */
     .app-main { flex: 1; padding: 40px 0 64px; }
     .app-page-header { margin-bottom: 32px; }
@@ -70,9 +133,44 @@
         <button class="lang-btn" data-lang="fr" onclick="i18n.set('fr')">FR</button>
       </div>
       <span class="app-tries-badge" id="app-tries-badge"></span>
-      <span class="app-nav-email" id="app-nav-email"></span>
-      <button class="btn btn-ghost" onclick="appLogout()" style="padding:7px 14px;font-size:13px;" data-i18n="app.signout">Sign Out</button>
-      <button class="btn btn-ghost" onclick="deleteAccount()" style="padding:7px 14px;font-size:13px;color:var(--danger);border-color:rgba(240,80,80,.25);" data-i18n="app.delete">Delete Account</button>
+
+      <!-- User menu -->
+      <div class="user-menu-wrap" id="user-menu-wrap">
+        <button class="user-menu-btn" id="user-menu-btn" onclick="toggleUserMenu(event)">
+          <div class="user-menu-avatar" id="user-avatar">?</div>
+          <span class="user-menu-label" id="app-nav-label"></span>
+          <svg class="user-menu-caret" width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 4 L6 8 L10 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-dropdown-header">
+            <div class="user-dropdown-name" id="dd-name"></div>
+            <div class="user-dropdown-email" id="dd-email"></div>
+          </div>
+          <button class="user-dropdown-item" onclick="openAcctModal('name')">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="4.5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 12c0-2.5 2.2-4.5 5-4.5s5 2 5 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            <span data-i18n="app.acct.name">Change Name</span>
+          </button>
+          <button class="user-dropdown-item" onclick="openAcctModal('email')">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="3" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M1 4.5 L7 8 L13 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            <span data-i18n="app.acct.email">Change Email</span>
+          </button>
+          <button class="user-dropdown-item" onclick="openAcctModal('password')">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="3" y="6" width="8" height="6" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 6V4.5a2 2 0 0 1 4 0V6" stroke="currentColor" stroke-width="1.3"/></svg>
+            <span data-i18n="app.acct.password">Change Password</span>
+          </button>
+          <div class="user-dropdown-sep"></div>
+          <button class="user-dropdown-item" onclick="appLogout()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2H2.5A1.5 1.5 0 0 0 1 3.5v7A1.5 1.5 0 0 0 2.5 12H5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M9 4.5 L13 7 L9 9.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 7H5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            <span data-i18n="app.signout">Sign Out</span>
+          </button>
+          <button class="user-dropdown-item danger" onclick="deleteAccount()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M5 4V2.5A.5.5 0 0 1 5.5 2h3a.5.5 0 0 1 .5.5V4" stroke="currentColor" stroke-width="1.3"/><path d="M3 4l.7 7.5A1 1 0 0 0 4.7 12.5h4.6a1 1 0 0 0 1-.9L11 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            <span data-i18n="app.delete">Delete Account</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </header>
@@ -251,39 +349,158 @@
 // ── Auth guard ─────────────────────────────────────────
 (function() {
   const token = localStorage.getItem("cda_token");
-  const email = localStorage.getItem("cda_email");
-  const tries = parseInt(localStorage.getItem("cda_tries") || "0", 10);
-
   if (!token) { window.location.href = "/login"; return; }
 
-  // Populate header
-  const badge = document.getElementById("app-tries-badge");
-  const lbl   = document.getElementById("app-nav-email");
-  if (lbl) lbl.textContent = email || "";
-  if (badge) {
-    const triesLabel = (typeof i18n !== 'undefined') ? i18n.t('app.tries')(tries) : tries + " analyses left";
-    badge.textContent = triesLabel;
-    badge.className   = "app-tries-badge" + (tries === 0 ? " tries-empty" : tries === 1 ? " tries-warn" : "");
-  }
+  const email = localStorage.getItem("cda_email") || "";
+  const name  = localStorage.getItem("cda_name")  || "";
+  const tries = parseInt(localStorage.getItem("cda_tries") || "0", 10);
 
-  // Validate token with server in background
+  _refreshBadge(tries);
+  _refreshUserHeader(name, email);
+
   fetch("/api/me", { headers: { Authorization: "Bearer " + token } })
     .then(r => r.ok ? r.json() : Promise.reject())
     .then(data => {
       localStorage.setItem("cda_tries", data.tries_remaining);
-      if (badge) {
-        const n = data.tries_remaining;
-        const triesLabel = (typeof i18n !== 'undefined') ? i18n.t('app.tries')(n) : n + " analyses left";
-        badge.textContent = triesLabel;
-        badge.className   = "app-tries-badge" + (n === 0 ? " tries-empty" : n === 1 ? " tries-warn" : "");
-      }
+      localStorage.setItem("cda_name",  data.name  || "");
+      localStorage.setItem("cda_email", data.email || "");
+      _refreshBadge(data.tries_remaining);
+      _refreshUserHeader(data.name, data.email);
     })
     .catch(() => { localStorage.clear(); window.location.href = "/login"; });
 })();
 
+function _refreshBadge(n) {
+  const badge = document.getElementById("app-tries-badge");
+  if (!badge) return;
+  const lbl = (typeof i18n !== 'undefined') ? i18n.t('app.tries')(n) : n + " analyses left";
+  badge.textContent = lbl;
+  badge.className = "app-tries-badge" + (n === 0 ? " tries-empty" : n === 1 ? " tries-warn" : "");
+}
+
+function _refreshUserHeader(name, email) {
+  const label   = document.getElementById("app-nav-label");
+  const avatar  = document.getElementById("user-avatar");
+  const ddName  = document.getElementById("dd-name");
+  const ddEmail = document.getElementById("dd-email");
+  const display = name || email;
+  const initial = (display || "?")[0].toUpperCase();
+  if (label)  label.textContent  = display;
+  if (avatar) avatar.textContent = initial;
+  if (ddName)  ddName.textContent  = name  || "—";
+  if (ddEmail) ddEmail.textContent = email || "";
+}
+
+// ── User menu dropdown ──────────────────────────────────
+window.toggleUserMenu = function(e) {
+  e.stopPropagation();
+  const btn = document.getElementById("user-menu-btn");
+  const dd  = document.getElementById("user-dropdown");
+  const open = dd.classList.toggle("open");
+  btn.classList.toggle("open", open);
+};
+
+document.addEventListener("click", function() {
+  const dd  = document.getElementById("user-dropdown");
+  const btn = document.getElementById("user-menu-btn");
+  if (dd)  dd.classList.remove("open");
+  if (btn) btn.classList.remove("open");
+});
+
+// ── Account modals ──────────────────────────────────────
+let _acctModalType = null;
+
+window.openAcctModal = function(type) {
+  _acctModalType = type;
+  document.getElementById("user-dropdown").classList.remove("open");
+  document.getElementById("user-menu-btn").classList.remove("open");
+
+  const titles = {
+    name:     (typeof i18n !== 'undefined') ? i18n.t('app.acct.name')     : 'Change Name',
+    email:    (typeof i18n !== 'undefined') ? i18n.t('app.acct.email')    : 'Change Email',
+    password: (typeof i18n !== 'undefined') ? i18n.t('app.acct.password') : 'Change Password',
+  };
+  document.getElementById("acct-modal-title").textContent = titles[type];
+  document.getElementById("acct-modal-err").textContent   = "";
+
+  ["name","email","password"].forEach(t =>
+    document.getElementById("acct-fields-" + t).style.display = "none"
+  );
+  document.getElementById("acct-fields-" + type).style.display = "block";
+
+  if (type === "name") {
+    document.getElementById("acct-input-name").value = localStorage.getItem("cda_name") || "";
+  } else {
+    document.querySelectorAll("#acct-modal input").forEach(i => i.value = "");
+  }
+
+  document.getElementById("acct-overlay").style.display = "flex";
+  setTimeout(() => {
+    const first = document.querySelector("#acct-fields-" + type + " input");
+    if (first) first.focus();
+  }, 60);
+};
+
+window.closeAcctModal = function() {
+  document.getElementById("acct-overlay").style.display = "none";
+  _acctModalType = null;
+};
+
+window.saveAcctModal = async function() {
+  const token = localStorage.getItem("cda_token");
+  const err   = document.getElementById("acct-modal-err");
+  const btn   = document.getElementById("acct-modal-save");
+  err.textContent = "";
+  btn.disabled = true;
+
+  let body = {};
+  if (_acctModalType === "name") {
+    const name = document.getElementById("acct-input-name").value.trim();
+    if (!name) { err.textContent = "Please enter a name."; btn.disabled = false; return; }
+    body = { name };
+  } else if (_acctModalType === "email") {
+    const email = document.getElementById("acct-input-email").value.trim();
+    const pass  = document.getElementById("acct-input-email-pass").value;
+    if (!email || !email.includes("@")) { err.textContent = "Please enter a valid email."; btn.disabled = false; return; }
+    if (!pass) { err.textContent = "Current password is required."; btn.disabled = false; return; }
+    body = { email, current_password: pass };
+  } else if (_acctModalType === "password") {
+    const cur = document.getElementById("acct-input-cur-pass").value;
+    const nw  = document.getElementById("acct-input-new-pass").value;
+    if (!cur) { err.textContent = "Please enter your current password."; btn.disabled = false; return; }
+    if (!nw || nw.length < 6) { err.textContent = "New password must be at least 6 characters."; btn.disabled = false; return; }
+    body = { current_password: cur, new_password: nw };
+  }
+
+  try {
+    const res  = await fetch("/api/account", {
+      method: "PATCH",
+      headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || "Update failed.");
+
+    if (_acctModalType === "name") {
+      localStorage.setItem("cda_name", data.name);
+      _refreshUserHeader(data.name, localStorage.getItem("cda_email") || "");
+    } else if (_acctModalType === "email") {
+      localStorage.setItem("cda_email", data.email);
+      _refreshUserHeader(localStorage.getItem("cda_name") || "", data.email);
+    }
+    closeAcctModal();
+  } catch(e) {
+    err.textContent = e.message;
+  } finally {
+    btn.disabled = false;
+  }
+};
+
+// ── Sign out / Delete ───────────────────────────────────
 window.appLogout = function() {
   localStorage.removeItem("cda_token");
   localStorage.removeItem("cda_email");
+  localStorage.removeItem("cda_name");
   localStorage.removeItem("cda_tries");
   window.location.href = "/";
 };
@@ -306,5 +523,50 @@ window.deleteAccount = async function() {
 };
 </script>
 <script src="/static/js/app.js"></script>
+
+<!-- ── Account Settings Modal ─────────────────────────── -->
+<div id="acct-overlay" class="acct-overlay" style="display:none;" onclick="if(event.target===this)closeAcctModal()">
+  <div class="acct-modal" id="acct-modal">
+    <div class="acct-modal-title" id="acct-modal-title"></div>
+
+    <!-- Change Name -->
+    <div id="acct-fields-name">
+      <div class="acct-modal-field">
+        <label data-i18n="app.acct.name.label">Display Name</label>
+        <input type="text" id="acct-input-name" autocomplete="off" onkeydown="if(event.key==='Enter')saveAcctModal()">
+      </div>
+    </div>
+
+    <!-- Change Email -->
+    <div id="acct-fields-email" style="display:none;">
+      <div class="acct-modal-field">
+        <label data-i18n="app.acct.newEmail">New Email Address</label>
+        <input type="email" id="acct-input-email" autocomplete="off">
+      </div>
+      <div class="acct-modal-field">
+        <label data-i18n="app.acct.confirmPass">Current Password</label>
+        <input type="password" id="acct-input-email-pass" autocomplete="current-password" onkeydown="if(event.key==='Enter')saveAcctModal()">
+      </div>
+    </div>
+
+    <!-- Change Password -->
+    <div id="acct-fields-password" style="display:none;">
+      <div class="acct-modal-field">
+        <label data-i18n="app.acct.currentPass">Current Password</label>
+        <input type="password" id="acct-input-cur-pass" autocomplete="current-password">
+      </div>
+      <div class="acct-modal-field">
+        <label data-i18n="app.acct.newPass">New Password</label>
+        <input type="password" id="acct-input-new-pass" autocomplete="new-password" onkeydown="if(event.key==='Enter')saveAcctModal()">
+      </div>
+    </div>
+
+    <div class="acct-modal-err" id="acct-modal-err"></div>
+    <div class="acct-modal-actions">
+      <button class="btn btn-ghost" onclick="closeAcctModal()" data-i18n="app.cancel" style="padding:8px 18px;font-size:13px;">Cancel</button>
+      <button class="btn btn-primary" id="acct-modal-save" onclick="saveAcctModal()" data-i18n="app.save" style="padding:8px 18px;font-size:13px;">Save Changes</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>

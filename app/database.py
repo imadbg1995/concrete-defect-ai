@@ -70,6 +70,7 @@ _CREATE_PG = """
         country          TEXT    NOT NULL DEFAULT '',
         phone            TEXT    NOT NULL DEFAULT '',
         gdpr_consent     BOOLEAN NOT NULL DEFAULT FALSE,
+        name             TEXT    NOT NULL DEFAULT '',
         created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
 """
@@ -83,6 +84,7 @@ _CREATE_SQ = """
         country          TEXT    NOT NULL DEFAULT '',
         phone            TEXT    NOT NULL DEFAULT '',
         gdpr_consent     INTEGER NOT NULL DEFAULT 0,
+        name             TEXT    NOT NULL DEFAULT '',
         created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
 """
@@ -91,6 +93,7 @@ _EXTRA_COLS = [
     ("country",      "TEXT NOT NULL DEFAULT ''"),
     ("phone",        "TEXT NOT NULL DEFAULT ''"),
     ("gdpr_consent", "INTEGER NOT NULL DEFAULT 0"),
+    ("name",         "TEXT NOT NULL DEFAULT ''"),
 ]
 
 
