@@ -111,14 +111,13 @@ STRICT RULE: Only describe visible facts — no assumptions here.
 
 ## 5. AI DEFECT MAP
 
-- Confirm whether a color overlay exists on the image
-- If overlay exists → describe what each color represents based on ACTUAL detected features:
-  - **Cyan** → Hairline cracks (< 0.5 mm)
-  - **Yellow** → Medium cracks (0.5–2 mm)
-  - **Orange / Red** → Wide or severe cracks (> 2 mm)
-  - **Magenta** → Spalling or material loss zones
-- Do NOT invent crack widths unless clearly measurable
-- If no overlay exists → state "No AI defect map available for this analysis" and omit color details
+A color-coded AI defect map has been generated alongside this report using the following classification:
+- **Cyan** → Hairline cracks (< 0.5 mm)
+- **Yellow** → Medium cracks (0.5–2 mm)
+- **Orange** → Wide or severe cracks (> 2 mm)
+- **Magenta** → Spalling or material loss zones
+
+Based on what is visible in the original image, briefly describe which defect types and severities are most likely represented in the overlay and their approximate location or distribution across the surface. Do NOT invent specific measurements — describe only what the image supports.
 
 ## 6. ROOT CAUSE ANALYSIS
 
